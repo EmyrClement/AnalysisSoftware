@@ -75,7 +75,11 @@ inputFiles = [
 #    '/storage/TopQuarkGroup/data/2011/ElectronHad/nTuple_v10_Run2011A-12Oct2013-v1_53X_GoldenJSON_LeptonPlus3Jets/*.root' # 53X 7TeV data
 #    ''53X 7TeV MC not available yet
 #     '/storage/TopQuarkGroup/data/2011/ElectronHad/nTuple_v10_Run2011B-19Nov2011-v1_44X_GoldenJSON_LeptonPlus3Jets/*.root' #44X 7TeV data
-#    '/storage/TopQuarkGroup/mc/7TeV/v10/LeptonPlus3JetsSkim/TTJets_TuneZ2_7TeV-madgraph-tauola_with_genjet_properties/nTuple_v10_Fall11-PU_S6_START44_V9B-v1_LeptonPlus3Jets/*.root' #44X 7TeV MC
+#     '/storage/TopQuarkGroup/mc/7TeV/v10/LeptonPlus3JetsSkim/TTJets_TuneZ2_7TeV-madgraph-tauola_with_genjet_properties/nTuple_v10_Fall11-PU_S6_START44_V9B-v1_LeptonPlus3Jets/*.root' #44X 7TeV MC
+#     '/storage/ec6821/NTupleProduction/SynchEx/CMSSW_5_3_16_patch1_nTuple_v10/src/SingleElectron_nTuple_53X_mc.root' # Synch exercise Original
+        '/storage/ec6821/NTupleProduction/CMSSW_5_3_16_patch1_nTuple_v10/src/Test_nTuple_53X_mc.root' 
+    #     '/storage/ec6821/NTupleProduction/CMSSW_5_3_16_patch1_nTuple_v10/src/SingleElectron_nTuple_53X_data.root' # Synch exercise Data
+#     '/storage/ec6821/NTupleProduction/CMSSW_5_3_16_patch1_nTuple_v10/src/TTJets_nTuple_53X_mc.root' # Synch exercise New
               ]
 
 #relative Path from calling BAT to the TopQuarkAnalysis folder
