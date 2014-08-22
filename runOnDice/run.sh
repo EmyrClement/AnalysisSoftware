@@ -16,7 +16,7 @@ cmsenv
 echo "CMSSW dir"
 ls
 
-git clone https://github.com/BristolTopGroup/AnalysisSoftware.git BristolAnalysis/Tools
+git clone https://github.com/EmyrClement/AnalysisSoftware.git -b runOnDice BristolAnalysis/Tools
 
 rm -r BristolAnalysis/Tools/test
 
@@ -34,8 +34,12 @@ ls -l
 
 cat script.sh
 
-tar -zcvf $ORIGDIR/output.tar.gz *.root
+cp *.root /hdfs/tmp/TQG/
+set +e
+chmod a+wr /hdfs/tmp/TQG/*.root
+set -e
 
 ls
 ls $ORIGDIR
+ls /hdfs/tmp/
 
