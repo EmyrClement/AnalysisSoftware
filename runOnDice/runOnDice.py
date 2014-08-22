@@ -162,36 +162,38 @@ jobs = [
 
 if options.run7TeV:
     if options.runCentral:
-        jobs.append(centralCommand7TeV)
-#         for sample in datasets2011:
-#             command = centralCommand7TeV.replace('TTJet',sample)
-#             jobs.append(command)
-#             if options.runSystematics:
-#                 # Don't run systematics for scaleup/down etc. samples
-#                 if sample.find('scaleup')>=0 or sample.find('scaledown')>=0 or sample.find('matchingup')>=0 or sample.find('matchingdown')>=0: continue
-#                 for systematic in systematics:
-#                     command = centralCommand7TeV.replace('central',systematic).replace('TTJet',sample)
-#                     jobs.append(command)
-#                     pass
-#                 pass
-#             pass
+        # jobs.append(centralCommand7TeV)
+        for sample in datasets2011:
+            # Don't run systematics for scaleup/down etc. samples
+            if sample.find('TTJets')>=0 and (sample.find('scaleup')>=0 or sample.find('scaledown')>=0 or sample.find('matchingup')>=0 or sample.find('matchingdown')>=0): continue
+            command = centralCommand7TeV.replace('TTJet',sample)
+            jobs.append(command)
+            if options.runSystematics:
+                if sample.find('scaleup')>=0 or sample.find('scaledown')>=0 or sample.find('matchingup')>=0 or sample.find('matchingdown')>=0: continue
+                for systematic in systematics:
+                    command = centralCommand7TeV.replace('central',systematic).replace('TTJet',sample)
+                    jobs.append(command)
+                    pass
+                pass
+            pass
         pass
     pass
 
 if options.run8TeV:
     if options.runCentral:
-        jobs.append(centralCommand8TeV)
-#         for sample in datasets2012:
-#             command = centralCommand8TeV.replace('TTJet',sample)
-#             jobs.append(command)
-#             if options.runSystematics:
-#                 if sample.find('scaleup')>=0 or sample.find('scaledown')>=0 or sample.find('matchingup')>=0 or sample.find('matchingdown')>=0: continue
-#                 for systematic in systematics:
-#                     command = centralCommand8TeV.replace('central',systematic).replace('TTJet',sample)
-#                     jobs.append(command)
-#                     pass
-#                 pass
-#             pass
+        # jobs.append(centralCommand8TeV)
+        for sample in datasets2012:
+            if sample.find('TTJets')>=0 and (sample.find('scaleup')>=0 or sample.find('scaledown')>=0 or sample.find('matchingup')>=0 or sample.find('matchingdown')>=0): continue
+            command = centralCommand8TeV.replace('TTJet',sample)
+            jobs.append(command)
+            if options.runSystematics:
+                if sample.find('scaleup')>=0 or sample.find('scaledown')>=0 or sample.find('matchingup')>=0 or sample.find('matchingdown')>=0: continue
+                for systematic in systematics:
+                    command = centralCommand8TeV.replace('central',systematic).replace('TTJet',sample)
+                    jobs.append(command)
+                    pass
+                pass
+            pass
         pass
     pass
 
