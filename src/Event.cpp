@@ -29,10 +29,14 @@ Event::Event() : //
 		genJets(), //
 		allMuons(), //
 		passesElectronSelection_(false),
+<<<<<<< HEAD
 		passesElectronQCDSelection_(false),
 		passesElectronConversionSelection_(false),
 		passesMuonSelection_(false),
 		passesMuonQCDSelection_(false),
+=======
+		passesMuonSelection_(false),
+>>>>>>> Commit before Christmas...
 		selectionOutputInfo_electron(),
 		selectionOutputInfo_muon(),
 		genParticles(), //
@@ -129,6 +133,7 @@ const bool Event::PassesElectronSelection() const {
 	return false;
 }
 
+<<<<<<< HEAD
 const bool Event::PassesElectronQCDSelection() const {
 	if ( passesElectronQCDSelection_ ) {
 		return true;
@@ -145,6 +150,8 @@ const bool Event::PassesElectronConversionSelection() const {
 	return false;
 }
 
+=======
+>>>>>>> Commit before Christmas...
 const bool Event::PassesMuonSelection() const {
 	if ( passesMuonSelection_ ) {
 		return true;
@@ -153,6 +160,7 @@ const bool Event::PassesMuonSelection() const {
 	return false;
 }
 
+<<<<<<< HEAD
 const bool Event::PassesMuonQCDSelection() const {
 	if ( passesMuonQCDSelection_ ) {
 		return true;
@@ -212,6 +220,27 @@ const JetCollection Event::getCleanedJets( unsigned int selectionCriteria ) cons
 		cleanedJetIndices = selectionOutputInfo_muonQCDNonisolated.getCleanedJetIndex();
 	}
 
+=======
+const LeptonPointer Event::getSignalLepton( bool isElectronChannel ) const {
+	if ( isElectronChannel ) {
+		unsigned int signalLeptonIndex = selectionOutputInfo_electron.getSignalLeptonIndex();
+		return allElectrons[signalLeptonIndex];
+	}
+	else {
+		unsigned int signalLeptonIndex = selectionOutputInfo_muon.getSignalLeptonIndex();
+		return allMuons[signalLeptonIndex];
+	}
+}
+
+const JetCollection Event::getCleanedJets( bool isElectronChannel ) const{
+	std::vector<unsigned int> cleanedJetIndices;
+	if ( isElectronChannel ) {
+		cleanedJetIndices = selectionOutputInfo_electron.getCleanedJetIndex();
+	}
+	else {
+		cleanedJetIndices = selectionOutputInfo_muon.getCleanedJetIndex();
+	}
+>>>>>>> Commit before Christmas...
 
 	JetCollection cleanedJets;
 	for ( unsigned int cleanedJetIndex = 0; cleanedJetIndex < cleanedJetIndices.size(); ++cleanedJetIndex ) {
@@ -220,6 +249,7 @@ const JetCollection Event::getCleanedJets( unsigned int selectionCriteria ) cons
 	return cleanedJets;
 }
 
+<<<<<<< HEAD
 const JetCollection Event::getCleanedBJets( unsigned int selectionCriteria ) const{
 
 	SelectionCriteria::selection selection = SelectionCriteria::selection(selectionCriteria);
@@ -270,6 +300,15 @@ const unsigned int Event::getNBJets( unsigned int selectionCriteria ) const {
 	}
 
 	return 0;
+=======
+const unsigned int Event::getNBJets( bool isElectronChannel ) const {
+	if ( isElectronChannel ) {
+		return selectionOutputInfo_electron.getNumberOfBJets();
+	}
+	else {
+		return selectionOutputInfo_muon.getNumberOfBJets();
+	}
+>>>>>>> Commit before Christmas...
 }
 
 JetCollection Event::GetBJetCollection(const JetCollection& jets, BtagAlgorithm::value btagAlgorithm,
@@ -345,6 +384,7 @@ void Event::setPassesElectronSelection( bool passesElectronSelection ) {
 	passesElectronSelection_ = passesElectronSelection;
 }
 
+<<<<<<< HEAD
 void Event::setPassesElectronQCDSelection( bool passesElectronQCDSelection ) {
 	passesElectronQCDSelection_ = passesElectronQCDSelection;
 }
@@ -353,21 +393,29 @@ void Event::setPassesElectronConversionSelection( bool passesElectronConversionS
 	passesElectronConversionSelection_ = passesElectronConversionSelection;
 }
 
+=======
+>>>>>>> Commit before Christmas...
 void Event::setPassesMuonSelection( bool passesMuonSelection ) {
 	passesMuonSelection_ = passesMuonSelection;
 }
 
+<<<<<<< HEAD
 void Event::setPassesMuonQCDSelection( bool passesMuonQCDSelection ) {
 	passesMuonQCDSelection_ = passesMuonQCDSelection;
 }
 
+=======
+>>>>>>> Commit before Christmas...
 void Event::setPassSelectionInfo( std::vector<unsigned int> passSelections ) {
 	for ( unsigned int selection = 0; selection < passSelections.size(); ++selection ) {
 		if ( passSelections[selection] == 1 ) setPassesMuonSelection( true );
 		if ( passSelections[selection] == 2 ) setPassesElectronSelection( true );
+<<<<<<< HEAD
 		if ( passSelections[selection] == 3 ) setPassesMuonQCDSelection( true );
 		if ( passSelections[selection] == 4 ) setPassesElectronQCDSelection( true );
 		if ( passSelections[selection] == 5 ) setPassesElectronConversionSelection( true );
+=======
+>>>>>>> Commit before Christmas...
 	}
 }
 
@@ -380,6 +428,7 @@ void Event::setMuonSelectionOutputInfo(SelectionOutputInfo newSelectionOutputInf
 	selectionOutputInfo_muon = newSelectionOutputInfo;
 }
 
+<<<<<<< HEAD
 void Event::setElectronQCDNonisolatedSelectionOutputInfo(SelectionOutputInfo newSelectionOutputInfo) {
 	selectionOutputInfo_electronQCDNonisolated = newSelectionOutputInfo;
 }
@@ -392,6 +441,8 @@ void Event::setMuonQCDNonisolatedSelectionOutputInfo(SelectionOutputInfo newSele
 	selectionOutputInfo_muonQCDNonisolated = newSelectionOutputInfo;
 }
 
+=======
+>>>>>>> Commit before Christmas...
 void Event::setHLTs(const boost::shared_ptr<std::vector<int> > triggers) {
 	HLTs = triggers;
 }

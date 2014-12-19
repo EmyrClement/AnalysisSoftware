@@ -44,7 +44,6 @@ NTupleEventReader::NTupleEventReader() :
 		selectionOutputReader_electronQCDNonisolated(new SelectionOutputReader(input, SelectionCriteria::ElectronPlusJetsQCDNonIsolated)), //
 		selectionOutputReader_electronQCDConversion(new SelectionOutputReader(input, SelectionCriteria::ElectronPlusJetsQCDConversion)), //
 		selectionOutputReader_muonQCDNonisolated(new SelectionOutputReader(input, SelectionCriteria::MuonPlusJetsQCDNonIsolated)), //
-
 		runNumberReader(new VariableReader<unsigned int>(input, "Event.Run")), //
 		eventNumberReader(new VariableReader<unsigned int>(input, "Event.Number")), //
 		lumiBlockReader(new VariableReader<unsigned int>(input, "Event.LumiSection")), //
