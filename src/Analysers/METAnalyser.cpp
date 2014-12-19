@@ -31,12 +31,10 @@ void METAnalyser::analyse(const EventPtr event) {
 		histMan_->setCurrentHistogramFolder(histogramFolder_ + "/" + prefix);
 		histMan_->H1D("MET")->Fill(met->et());
 		histMan_->H1D_BJetBinned("MET")->Fill(met->et(), weight_);
-		if (index != METAlgorithm::GenMET && !event->isRealData()) {
-			histMan_->H2D_BJetBinned("RecoMET_vs_GenMET")->Fill(event->GenMET()->et(), met->et(), weight_);
-		}
-		//do not fill other histograms for met systematics
-		if ((index > METAlgorithm::patType1p2CorrectedPFMet) && (index != METAlgorithm::recoMetPFlow))
-			continue;
+		// if (index != METAlgorithm::GenMET && !event->isRealData()) {
+		// 	histMan_->H2D_BJetBinned("RecoMET_vs_GenMET")->Fill(event->GenMET()->et(), met->et(), weight_);
+		// }
+
 		histMan_->H1D("MET_phi")->Fill(met->phi(), weight_);
 		histMan_->H1D_BJetBinned("MET_phi")->Fill(met->phi(), weight_);
 		histMan_->H1D_BJetBinned("METsignificance")->Fill(met->significance(), weight_);
@@ -59,10 +57,6 @@ void METAnalyser::analyseTransverseMass(const EventPtr event, const ParticlePoin
 
 		const METPointer met(event->MET(metType));
 		histMan_->setCurrentHistogramFolder(histogramFolder_ + "/" + prefix);
-
-		//do not fill histograms for met systematics
-		if (index > METAlgorithm::patType1p2CorrectedPFMet)
-			continue;
 
 		double MT = Event::MT(particle, met);
 		double angle = met->angle(particle);
@@ -88,14 +82,11 @@ void METAnalyser::createHistograms() {
 		histMan_->addH1D_BJetBinned("ST", "ST;ST [GeV]; Events/5 GeV", 600, 0, 3000);
 		histMan_->addH1D_BJetBinned("WPT", "WPT;WPT [GeV]; Events/GeV", 1000, 0, 1000);
 		histMan_->addH1D_BJetBinned("MT", "MT;MT [GeV]; Events/GeV", 1000, 0, 1000);
-		if (index != METAlgorithm::GenMET) {
-			histMan_->addH2D_BJetBinned("RecoMET_vs_GenMET", "RecoMET_vs_GenMET; MET_{GEN} [GeV]; MET_{RECO} [GeV]", 60,
-					0, 300, 60, 0, 300);
-		}
+		// if (index != METAlgorithm::GenMET) {
+		// 	histMan_->addH2D_BJetBinned("RecoMET_vs_GenMET", "RecoMET_vs_GenMET; MET_{GEN} [GeV]; MET_{RECO} [GeV]", 60,
+		// 			0, 300, 60, 0, 300);
+		// }
 
-		//do not create other histograms for met systematics
-		if ((index > METAlgorithm::patType1p2CorrectedPFMet) && (index != METAlgorithm::recoMetPFlow))
-			continue;
 		histMan_->addH1D("MET_phi", "#phi(Missing transverse energy);#phi(#slash{E}_{T});Events/0.1", 80, -4,
 						4);
 		histMan_->addH1D_BJetBinned("MET_phi", "#phi(Missing transverse energy);#phi(#slash{E}_{T});Events/0.1", 80, -4,
@@ -120,8 +111,8 @@ void METAnalyser::createHistograms() {
 
 void METAnalyser::analyse(const EventPtr event, const ParticlePointer particle, const JetCollection jets) {
 	analyse_HT(event, jets);
-	analyse_ST(event, particle, jets);
-	analyse(event, particle);
+	// analyse_ST(event, particle, jets);
+	// analyse(event, particle);
 }
 
 void METAnalyser::analyse_HT(const EventPtr event, const JetCollection jets) {

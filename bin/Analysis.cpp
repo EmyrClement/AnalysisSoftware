@@ -57,10 +57,7 @@ void Analysis::analyse() {
 			bjetWeights = BjetWeights(jets, numberOfBJets);
 
 		eventcountAnalyser->analyse(currentEvent);
-//		mttbarAnalyser->analyse(currentEvent);
 		ttbar_plus_X_analyser_->analyse(currentEvent);
-		diffVariablesAnalyser->analyse(currentEvent);
-//		binningAnalyser->analyse(currentEvent);
 	}
 }
 
@@ -81,23 +78,25 @@ void Analysis::initiateEvent() {
 	histMan->setCurrentJetBin(currentEvent->Jets().size());
 	histMan->setCurrentBJetBin(0);
 
-	if (!currentEvent->isRealData()) {
-		weight = weights->getWeight(currentEvent->getDataType());
-		//TODO: fix this dirty little thing
-		pileUpWeight = weights->reweightPileUp(currentEvent->getTrueNumberOfVertices().at(1));
-		weight *= pileUpWeight;
-		if (Globals::pdfWeightNumber != 0) {
-			try {
-				double pdf_weight(currentEvent->PDFWeights().at(Globals::pdfWeightNumber) / currentEvent->PDFWeights().at(0));
-				weight *= pdf_weight;
+	// Ignore PU and PDF weights for now
+	// if (!currentEvent->isRealData()) {
+	// 	weight = weights->getWeight(currentEvent->getDataType());
+	// 	//TODO: fix this dirty little thing
+	// 	std::cout << "Getting PU weight" << std::endl;
+	// 	pileUpWeight = weights->reweightPileUp(currentEvent->getTrueNumberOfVertices().at(1));
+	// 	weight *= pileUpWeight;
+	// 	if (Globals::pdfWeightNumber != 0) {
+	// 		try {
+	// 			double pdf_weight(currentEvent->PDFWeights().at(Globals::pdfWeightNumber) / currentEvent->PDFWeights().at(0));
+	// 			weight *= pdf_weight;
 
-				histMan->setCurrentHistogramFolder("");
-				histMan->H1D("PDFweights")->Fill(pdf_weight);
-			} catch (exception& e) {
-				cout << "PDF weight assigning exception: " << e.what() << endl;
-			}
-		}
-	}
+	// 			histMan->setCurrentHistogramFolder("");
+	// 			histMan->H1D("PDFweights")->Fill(pdf_weight);
+	// 		} catch (exception& e) {
+	// 			cout << "PDF weight assigning exception: " << e.what() << endl;
+	// 		}
+	// 	}
+	// }
 
 	//top pt weight
 	if(Globals::applyTopPtReweighting == true && currentEvent->getDataType() == DataType::TTJets){
@@ -154,11 +153,6 @@ void Analysis::createHistograms() {
 			<< endl;
 	lastNumberOfHistograms = numberOfHistograms;
 
-	diffVariablesAnalyser->createHistograms();
-	numberOfHistograms = histMan->size();
-	cout << "Number of histograms added by diffVariablesAnalyser: " << numberOfHistograms - lastNumberOfHistograms << endl;
-	lastNumberOfHistograms = numberOfHistograms;
-
 	histMan->setCurrentHistogramFolder("");
 	histMan->addH1D("PDFweights", "PDF weights", 1000, 0.8, 1.2);
 
@@ -192,7 +186,6 @@ Analysis::Analysis(std::string datasetInfoFile) : //
 		neutrinoRecoAnalyser(new NeutrinoReconstructionAnalyser(histMan)), //
 		ttbar_plus_X_analyser_(new TTbar_plus_X_analyser(histMan)), //
 		vertexAnalyser(new VertexAnalyser(histMan)),
-		diffVariablesAnalyser(new DiffVariablesAnalyser(histMan)),
 		binningAnalyser(new BinningAnalyser(histMan)) {
 	histMan->enableDebugMode(true);
 }
