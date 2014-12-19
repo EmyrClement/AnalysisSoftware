@@ -40,8 +40,10 @@ void ElectronAnalyser::analyse(const EventPtr event) {
 void ElectronAnalyser::analyseElectron(const ElectronPointer electron, double weight) {
 	histMan_->setCurrentHistogramFolder(histogramFolder_);
 	weight_ = weight * prescale_ * scale_;
+
 	if (!singleElectronOnly_)
 		return;
+
 	histMan_->H1D_BJetBinned("electron_eta")->Fill(electron->eta(), weight_);
 	histMan_->H1D_BJetBinned("electron_AbsEta")->Fill(fabs(electron->eta()), weight_);
 	histMan_->H1D_BJetBinned("electron_rhoCorrectedIso_03")->Fill(electron->pfRelativeIsolationRhoCorrected(), weight_);
