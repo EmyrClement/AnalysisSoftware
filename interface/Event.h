@@ -155,6 +155,7 @@ public:
 
 	const LeptonPointer getSignalLepton( bool isElectronChannel ) const;
 	const JetCollection getCleanedJets( bool isElectronChannel ) const;
+	const JetCollection getCleanedBJets( bool isElectronChannel ) const;
 	const unsigned int getNBJets( bool isElectronChannel ) const;
 
 	JetCollection GetBJetCollection(const JetCollection& jets, BtagAlgorithm::value btagAlgorithm,

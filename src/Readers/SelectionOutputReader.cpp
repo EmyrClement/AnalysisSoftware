@@ -18,6 +18,7 @@ SelectionOutputReader::SelectionOutputReader() :
 	numberBJetsReader(),
 	signalLeptonIndexReader(),
 	cleanedJetsIndexReader(),
+	cleanedBJetsIndexReader(),
 	selectionOutputInfo() {
 
 }
@@ -27,6 +28,7 @@ SelectionOutputReader::SelectionOutputReader(TChainPointer input, bool isElectro
 	numberBJetsReader(),
 	signalLeptonIndexReader(),
 	cleanedJetsIndexReader(),
+	cleanedBJetsIndexReader(),
 	selectionOutputInfo() {
 
 	if ( isElectronChannel ) {
@@ -34,12 +36,14 @@ SelectionOutputReader::SelectionOutputReader(TChainPointer input, bool isElectro
 		numberBJetsReader = VariableReader<unsigned int>(input, "TopPairElectronPlusJetsSelection.NumberOfBtags");
 		signalLeptonIndexReader = VariableReader<unsigned int>(input, "TopPairElectronPlusJetsSelection.signalElectronIndex");
 		cleanedJetsIndexReader = VariableReader<MultiUIntPointer>(input, "TopPairElectronPlusJetsSelection.cleanedJetIndex");
+		cleanedBJetsIndexReader = VariableReader<MultiUIntPointer>(input, "TopPairElectronPlusJetsSelection.cleanedBJetIndex");
 	}
 	else {
 		numberJetsReader = VariableReader<unsigned int>(input, "TopPairMuonPlusJetsSelection.NumberOfJets");
 		numberBJetsReader = VariableReader<unsigned int>(input, "TopPairMuonPlusJetsSelection.NumberOfBtags");
 		signalLeptonIndexReader = VariableReader<unsigned int>(input, "TopPairMuonPlusJetsSelection.signalMuonIndex");
 		cleanedJetsIndexReader = VariableReader<MultiUIntPointer>(input, "TopPairMuonPlusJetsSelection.cleanedJetIndex");		
+		cleanedBJetsIndexReader = VariableReader<MultiUIntPointer>(input, "TopPairMuonPlusJetsSelection.cleanedBJetIndex");
 	}
 }
 
@@ -48,6 +52,7 @@ void SelectionOutputReader::initialise() {
 	numberBJetsReader.initialise();
 	signalLeptonIndexReader.initialise();
 	cleanedJetsIndexReader.initialise();
+	cleanedBJetsIndexReader.initialise();
 }
 
 const SelectionOutputInfo& SelectionOutputReader::getSelectionOutputInfo() {
@@ -64,6 +69,12 @@ void SelectionOutputReader::readSelectionOutputInfo() {
 		cleanedJetIndices.push_back( cleanedJetsIndexReader.getUIntVariableAt(index) );
 	}
 	selectionOutputInfo.setCleanedJetIndex( cleanedJetIndices );
+
+	std::vector<unsigned int> cleanedBJetIndices;
+	for (unsigned int index = 0; index < cleanedBJetsIndexReader.size(); index++) {
+		cleanedBJetIndices.push_back( cleanedBJetsIndexReader.getUIntVariableAt(index) );
+	}
+	selectionOutputInfo.setCleanedBJetIndex( cleanedBJetIndices );
 
 	selectionOutputInfo.setSignalLeptonIndex( signalLeptonIndexReader.getVariable() );
 }
