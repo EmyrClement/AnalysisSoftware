@@ -25,6 +25,7 @@ private:
 	VariableReader<unsigned int> numberBJetsReader;
 	VariableReader<unsigned int> signalLeptonIndexReader;
 	VariableReader<MultiUIntPointer> cleanedJetsIndexReader;
+	VariableReader<MultiUIntPointer> cleanedBJetsIndexReader;
 
 	void readSelectionOutputInfo();
 

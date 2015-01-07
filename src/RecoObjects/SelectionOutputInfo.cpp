@@ -18,8 +18,8 @@ SelectionOutputInfo::SelectionOutputInfo() :
 nJets_(),
 nBJets_(),
 signalLeptonIndex_(),
-cleanedJetsIndices_() {
-
+cleanedJetsIndices_(),
+cleanedBJetsIndices_() {
 }
 
 SelectionOutputInfo::~SelectionOutputInfo() {
@@ -41,6 +41,9 @@ std::vector<unsigned int> SelectionOutputInfo::getCleanedJetIndex() const {
 	return cleanedJetsIndices_;
 }
 
+std::vector<unsigned int> SelectionOutputInfo::getCleanedBJetIndex() const {
+	return cleanedBJetsIndices_;
+}
 
 void SelectionOutputInfo::setNumberOfJets( unsigned int nJets ) {
 	nJets_ = nJets;
@@ -56,6 +59,10 @@ void SelectionOutputInfo::setSignalLeptonIndex( unsigned int signalLeptonIndex )
 
 void SelectionOutputInfo::setCleanedJetIndex( std::vector<unsigned int> cleanedJetsIndices ) {
 	cleanedJetsIndices_ = cleanedJetsIndices;
+}
+
+void SelectionOutputInfo::setCleanedBJetIndex( std::vector<unsigned int> cleanedBJetsIndices ) {
+	cleanedBJetsIndices_ = cleanedBJetsIndices;
 }
 
 }

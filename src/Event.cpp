@@ -161,6 +161,22 @@ const JetCollection Event::getCleanedJets( bool isElectronChannel ) const{
 	return cleanedJets;
 }
 
+const JetCollection Event::getCleanedBJets( bool isElectronChannel ) const{
+	std::vector<unsigned int> cleanedBJetIndices;
+	if ( isElectronChannel ) {
+		cleanedBJetIndices = selectionOutputInfo_electron.getCleanedBJetIndex();
+	}
+	else {
+		cleanedBJetIndices = selectionOutputInfo_muon.getCleanedBJetIndex();
+	}
+
+	JetCollection cleanedBJets;
+	for ( unsigned int cleanedBJetIndex = 0; cleanedBJetIndex < cleanedBJetIndices.size(); ++cleanedBJetIndex ) {
+		cleanedBJets.push_back( allJets[cleanedBJetIndex] );
+	}
+	return cleanedBJets;
+}
+
 const unsigned int Event::getNBJets( bool isElectronChannel ) const {
 	if ( isElectronChannel ) {
 		return selectionOutputInfo_electron.getNumberOfBJets();
