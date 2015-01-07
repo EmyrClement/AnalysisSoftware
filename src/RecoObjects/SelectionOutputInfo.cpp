@@ -20,7 +20,6 @@ nBJets_(),
 signalLeptonIndex_(),
 cleanedJetsIndices_(),
 cleanedBJetsIndices_() {
-
 }
 
 SelectionOutputInfo::~SelectionOutputInfo() {
