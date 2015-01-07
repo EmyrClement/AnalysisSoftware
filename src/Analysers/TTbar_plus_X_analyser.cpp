@@ -36,7 +36,7 @@ void TTbar_plus_X_analyser::ePlusJetsSignalAnalysis(const EventPtr event) {
 		std::cout << "Number of jets : " << jets.size() << std::endl;
 		unsigned int numberOfBjets = event->getNBJets( true );
 		std::cout << "Number of b jets : " << numberOfBjets << std::endl;
-		const JetCollection bJets(topEplusJetsRefSelection_->cleanedBJets(event));
+		const JetCollection bJets(event->getCleanedBJets( true ));
 
 		const LeptonPointer signalLepton = event->getSignalLepton( true );
 		std::cout << "Signal lepton pt : " << signalLepton->pt() << std::endl;
