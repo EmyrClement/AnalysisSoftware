@@ -86,6 +86,9 @@ elif centerOfMassEnergy == 7:
 bJetResoFile = toolsFolder + "data/bJetReso.root"
 lightJetResoFile = toolsFolder + "data/lightJetReso.root"
 
+getHadronTriggerFromFile = False
+hadronTriggerFile = ''
+
 #use HitFit for analysis
 useHitFit = False
 produceFitterASCIIoutput = False

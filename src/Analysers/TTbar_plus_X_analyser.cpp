@@ -33,13 +33,10 @@ void TTbar_plus_X_analyser::ePlusJetsSignalAnalysis(const EventPtr event) {
 	// if (topEplusJetsRefSelection_->passesFullSelectionExceptLastTwoSteps(event)) {
 	if ( event->PassesElectronSelection() ) {
 		const JetCollection jets(event->getCleanedJets( true ));
-		std::cout << "Number of jets : " << jets.size() << std::endl;
 		unsigned int numberOfBjets = event->getNBJets( true );
-		std::cout << "Number of b jets : " << numberOfBjets << std::endl;
 		const JetCollection bJets(event->getCleanedBJets( true ));
 
 		const LeptonPointer signalLepton = event->getSignalLepton( true );
-		std::cout << "Signal lepton pt : " << signalLepton->pt() << std::endl;
 
 		double bjetWeight = 1;
 		histMan_->setCurrentJetBin(jets.size());

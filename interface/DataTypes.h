@@ -18,7 +18,7 @@ enum value {
 	SingleElectron,
 	SingleMu,
 	TTJets,
-	Wjets,
+	WJets,
 	W1Jet,
 	W2Jets,
 	W3Jets,
@@ -29,24 +29,13 @@ enum value {
 	Z2Jets,
 	Z3Jets,
 	Z4Jets,
-	// 2011 QCD samples
-	QCD_BCtoE_Pt20to30,
-	QCD_BCtoE_Pt30to80,
-	QCD_BCtoE_Pt80to170,
-	QCD_EMEnriched_Pt20to30,
-	QCD_EMEnriched_Pt30to80,
-	QCD_EMEnriched_Pt80to170,
-	QCD_EMEnriched_Pt170to250,
-	QCD_EMEnriched_Pt250to350,
-	QCD_EMEnriched_Pt350,
-	QCD_MuEnrichedPt15_Pt20,
-	// 2012 QCD samples
+
+	// PHYS14 QCD samples
+	// BC->E
 	QCD_BCtoE_Pt20_30,
 	QCD_BCtoE_Pt30_80,
-	QCD_BCtoE_Pt80_170,
-	QCD_BCtoE_Pt170_250,
-	QCD_BCtoE_Pt250_350,
-	QCD_BCtoE_Pt350,
+	QCD_BCtoE_Pt170,
+	// EM Enriched
 	QCD_EMEnriched_Pt20_30,
 	QCD_EMEnriched_Pt30_80,
 	QCD_EMEnriched_Pt80_170,
@@ -66,12 +55,10 @@ enum value {
 	QCD_MuEnrichedPt5_Pt600to800,
 	QCD_MuEnrichedPt5_Pt800to1000,
 	QCD_MuEnrichedPt5_Pt1000,
-	PhotonJets_Pt40to100,
+	//PHYS14 PJ samples
 	PhotonJets_Pt100to200,
-	PhotonJets_Pt200toInf,
-	//2012 PJ samples
 	PhotonJets_Pt200to400,
-	PhotonJets_Pt400toInf,
+	PhotonJets_Pt600toInf,
 	VQQ,
 	singleTop_And_W, //
 	singleTopTChannel,
@@ -81,20 +68,6 @@ enum value {
 	singleAntiTopSChannel,
 	TTJets_mcatnlo,
 	TTJets_powheg,
-	Zprime_M500GeV_W5GeV,
-	Zprime_M500GeV_W50GeV,
-	Zprime_M750GeV_W7500MeV,
-	Zprime_M1TeV_W10GeV,
-	Zprime_M1TeV_W100GeV,
-	Zprime_M1250GeV_W12500MeV,
-	Zprime_M1500GeV_W15GeV,
-	Zprime_M1500GeV_W150GeV,
-	Zprime_M2TeV_W20GeV,
-	Zprime_M2TeV_W200GeV,
-	Zprime_M3TeV_W30GeV,
-	Zprime_M3TeV_W300GeV,
-	Zprime_M4TeV_W40GeV,
-	Zprime_M4TeV_W400GeV,
 	WWtoAnything,
 	WZtoAnything,
 	ZZtoAnything,
@@ -131,7 +104,7 @@ const boost::array<std::string, DataType::NUMBER_OF_DATA_TYPES> names = { {
 		"SingleElectron",//
 		"SingleMu",//
 		"TTJet", //
-		"WJetsToLNu", //
+		"WJets", //
 		"W1Jet", //
 		"W2Jets", //
 		"W3Jets", //
@@ -142,30 +115,17 @@ const boost::array<std::string, DataType::NUMBER_OF_DATA_TYPES> names = { {
 		"DY2JetsToLL", //
 		"DY3JetsToLL", //
 		"DY4JetsToLL", //
-		//2011 QCD Samples
-		"QCD_Pt-20to30_BCtoE", //
-		"QCD_Pt-30to80_BCtoE", //
-		"QCD_Pt-80to170_BCtoE", //
-		"QCD_Pt-20to30_EMEnriched", //
-		"QCD_Pt-30to80_EMEnriched", //
-		"QCD_Pt-80to170_EMEnriched", //10
-		"QCD_Pt-170to250_EMEnriched", //
-		"QCD_Pt-250to350_EMEnriched", //
-		"QCD_Pt-350_EMEnriched", //
-		"QCD_Pt-20_MuEnrichedPt-15", //
-		//2012 QCD samples
-		"QCD_Pt_20_30_BCtoE", //
-		"QCD_Pt_30_80_BCtoE", //
-		"QCD_Pt_80_170_BCtoE", //
-		"QCD_Pt_170_250_BCtoE", //
-		"QCD_Pt_250_350_BCtoE", //
-		"QCD_Pt_350_BCtoE", //
-		"QCD_Pt_20_30_EMEnriched", //
-		"QCD_Pt_30_80_EMEnriched", //
-		"QCD_Pt_80_170_EMEnriched", //
-		"QCD_Pt_170_250_EMEnriched", //
-		"QCD_Pt_250_350_EMEnriched", //
-		"QCD_Pt_350_EMEnriched", //
+
+		//PHYS14 QCD samples
+		"QCD_bcToE_20to30", //
+		"QCD_bcToE_30to80", //
+		"QCD_bcToE_170toInf", //
+		"QCD_EMEnriched_20to30", //
+		"QCD_EMEnriched_30to80", //
+		"QCD_EMEnriched_80to170", //
+		"QCD_EMEnriched_170to250", //
+		"QCD_EMEnriched_250to350", //
+		"QCD_EMEnriched_350", //
 		//2011 & 2012 Muon QCD samples
 		"QCD_Pt_20_MuEnrichedPt_15", //
 		"QCD_Pt-15to20_MuEnrichedPt5", //
@@ -180,35 +140,20 @@ const boost::array<std::string, DataType::NUMBER_OF_DATA_TYPES> names = { {
 		"QCD_Pt-600to800_MuEnrichedPt5", //
 		"QCD_Pt-800to1000_MuEnrichedPt5", //
 		"QCD_Pt-1000_MuEnrichedPt5", //
-		"GJets_HT-40To100", //
-		"GJets_HT-100To200", //
-		"GJets_HT-200ToInf", //
-		//2012 PJ samples
-		"GJets_HT-200To400", //
-		"GJets_HT-400ToInf", //
+		//PHYS14 PJ samples
+		"GJets_100to200", //
+		"GJets_200to400", //
+		"GJets_600toInf", //
+
 		"VqqJets", //
-		"T_tW-channel", //
-		"T_t-channel", //
-		"T_s-channel", //
-		"Tbar_tW-channel", //
-		"Tbar_t-channel", //20
-		"Tbar_s-channel", //
-	        "TTJets-mcatnlo", //
-        	"TTJets-powheg", //
-		"Zprime_M500GeV_W5GeV", //
-		"Zprime_M500GeV_W50GeV", //
-		"Zprime_M750GeV_W7500MeV", //
-		"Zprime_M1000GeV_W10GeV", //
-		"Zprime_M1000GeV_W100GeV", //
-		"Zprime_M1250GeV_W12500MeV", //
-		"Zprime_M1500GeV_W15GeV", //
-		"Zprime_M1500GeV_W150GeV", //
-		"Zprime_M2000GeV_W20GeV", //
-		"Zprime_M2000GeV_W200GeV", //
-		"Zprime_M3000GeV_W30GeV", //
-		"Zprime_M3000GeV_W300GeV", //30
-		"Zprime_M4000GeV_W40GeV", //
-		"Zprime_M4000GeV_W400GeV", //
+		"T_tW", //
+		"TToLeptons_t", //
+		"TToLeptons_s", //
+		"Tbar_tw", //
+		"TBarToLeptons_t", //20
+		"TBarToLeptons_s", //
+		"TTJets-mcatnlo", //
+		"TTJets-powheg", //
 		"WWtoAnything", //
 		"WZtoAnything", //
 		"ZZtoAnything", //

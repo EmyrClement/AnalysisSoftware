@@ -125,9 +125,7 @@ const EventPtr NTupleEventReader::getNextEvent() {
 	currentEvent->setMuons(muonReader->getMuons());
 
 	currentEvent->setPassSelectionInfo( *passesSelectionReader->getVariable() );
-	std::cout << "Electron" << std::endl;
 	currentEvent->setElectronSelectionOutputInfo( selectionOutputReader_electron->getSelectionOutputInfo() );
-	std::cout << "Muon" << std::endl;
 	currentEvent->setMuonSelectionOutputInfo( selectionOutputReader_muon->getSelectionOutputInfo() );
 
 	// if (!currentEvent->isRealData()) {
@@ -307,7 +305,6 @@ DataType::value NTupleEventReader::getDataType(const std::string filename) {
 
 	for (unsigned int index = 0; index < DataType::names.size(); ++index) {
 		const std::string searchString(DataType::names.at(index));
-
 		if (filename.find(searchString) != std::string::npos) {
 			filetype = (DataType::value) index;
 		}

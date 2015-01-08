@@ -205,6 +205,7 @@ void ElectronReader::readElectrons() {
 }
 
 void ElectronReader::initialise() {
+
 	energyReader.initialise();
 	pxReader.initialise();
 	pyReader.initialise();
@@ -256,6 +257,7 @@ void ElectronReader::initialise() {
 	// 				<< endl;
 	// 	}
 	// }
+
 	if (Globals::NTupleVersion >= 7) {
 		mvaTrigV0_.initialise();
 		mvaNonTrigV0_.initialise();
@@ -269,9 +271,12 @@ void ElectronReader::initialise() {
 				<< "Electron::PfPUChargedHadronIso(), Electron::mvaTrigV0(), Electron::mvaNonTrigV0(), Electron::passConversionVeto()"
 				<< endl;
 	}
+
+
 	if (Globals::NTupleVersion >= 9) {
 		PFRelativeIsolationRho_DR03_.initialise();
 	}
+
 }
 
 }

@@ -13,7 +13,6 @@
 #include "../interface/EventCounter.h"
 #include <cmath>
 #include <math.h>
-#include "../interface/Printers/EventTablePrinter.h"
 #include "../interface/ReconstructionModules/ChiSquaredBasedTopPairReconstruction.h"
 #include "../interface/LumiReWeighting.h"
 #include "../interface/GlobalVariables.h"
@@ -170,8 +169,8 @@ Analysis::Analysis(std::string datasetInfoFile) : //
 		weight(0), //
 		pileUpWeight(1), //
 		abcdMethodAnalyser_(new ABCDMethodAnalyser(histMan)), //
-		bjetAnalyser(new BJetAnalyser(histMan)), //
-		diElectronAnalyser(new DiElectronAnalyser(histMan)), //
+		// bjetAnalyser(new BJetAnalyser(histMan)), //
+		// diElectronAnalyser(new DiElectronAnalyser(histMan)), //
 		electronAnalyser(new ElectronAnalyser(histMan)), //
 		eventcountAnalyser(new EventCountAnalyser(histMan)), //
 		hltriggerAnalyser(new HLTriggerTurnOnAnalyser(histMan)), //
@@ -180,10 +179,10 @@ Analysis::Analysis(std::string datasetInfoFile) : //
 		jetAnalyser(new JetAnalyser(histMan)), //
 		mcAnalyser(new MCAnalyser(histMan)), //
 		metAnalyser(new METAnalyser(histMan)), //
-		mttbarAnalyser(new MTtbarAnalyser(histMan)), //
+		// mttbarAnalyser(new MTtbarAnalyser(histMan)), //
 		muonAnalyser(new MuonAnalyser(histMan)), //
-		mvAnalyser(new MVAnalyser(histMan)), //
-		neutrinoRecoAnalyser(new NeutrinoReconstructionAnalyser(histMan)), //
+		// mvAnalyser(new MVAnalyser(histMan)), //
+		// neutrinoRecoAnalyser(new NeutrinoReconstructionAnalyser(histMan)), //
 		ttbar_plus_X_analyser_(new TTbar_plus_X_analyser(histMan)), //
 		vertexAnalyser(new VertexAnalyser(histMan)),
 		binningAnalyser(new BinningAnalyser(histMan)) {
