@@ -131,103 +131,10 @@ void TTbar_plus_X_analyser::ePlusJetsSignalAnalysis(const EventPtr event) {
 void TTbar_plus_X_analyser::ePlusJetsQcdAnalysis(const EventPtr event) {
 	if ( event->PassesElectronQCDSelection() ) {
 
-<<<<<<< HEAD
 		const JetCollection jets(event->getCleanedJets( SelectionCriteria::ElectronPlusJetsQCDNonIsolated ));
 		unsigned int numberOfBjets = event->getNBJets( SelectionCriteria::ElectronPlusJetsQCDNonIsolated );
 		const JetCollection bJets(event->getCleanedBJets( SelectionCriteria::ElectronPlusJetsQCDNonIsolated ));
 		const LeptonPointer signalLepton = event->getSignalLepton( SelectionCriteria::ElectronPlusJetsQCDNonIsolated );
-=======
-		const JetCollection jets(qcdNonIsoElectronSelection_->cleanedJets(event));
-		const JetCollection bJets(qcdNonIsoElectronSelection_->cleanedBJets(event));
-		const JetPointer fourthJet = jets[3];
-		unsigned int numberOfBjets(bJets.size());
-		vector<double> bjetWeights;
-		if (event->isRealData()) {
-			for (unsigned int index = 0; index <= numberOfBjets; ++index) {
-				if (index == numberOfBjets)
-					bjetWeights.push_back(1);
-				else
-					bjetWeights.push_back(0);
-			}
-		} else
-			bjetWeights = BjetWeights(jets, numberOfBjets);
-		histMan_->setCurrentJetBin(jets.size());
-		histMan_->setCurrentBJetBin(bJets.size());
-		//in case of prescaled triggers
-		unsigned int prescale(qcdNonIsoElectronSelection_->prescale(event));
-		const LeptonPointer signalLepton = qcdNonIsoElectronSelection_->signalLepton(event);
-		const ElectronPointer signalElectron(boost::static_pointer_cast<Electron>(signalLepton));
-		double hadronTriggerLegCorrection = event->isRealData() ? 1. : fourthJet->getEfficiencyCorrection( Globals::ElectronScaleFactorSystematic );
-		double efficiencyCorrection = event->isRealData() ? 1. : signalElectron->getEfficiencyCorrection(false, Globals::ElectronScaleFactorSystematic, event->runnumber()) * hadronTriggerLegCorrection;
-
-		qcdNonIsoElectronAnalyser_->setPrescale(prescale);
-		metAnalyserqcdNonIsoElectronSelection_->setPrescale(prescale);
-
-		for (unsigned int weightIndex = 0; weightIndex < bjetWeights.size(); ++weightIndex) {
-			double bjetWeight = bjetWeights.at(weightIndex);
-			if ( bjetWeight == 0 ) continue;
-
-			histMan_->setCurrentBJetBin(weightIndex);
-			qcdNonIsoElectronAnalyser_->setScale(bjetWeight * efficiencyCorrection);
-			metAnalyserqcdNonIsoElectronSelection_->setScale(bjetWeight * efficiencyCorrection);
-
-			qcdNonIsoElectronAnalyser_->analyse(event);
-			qcdNonIsoElectronAnalyser_->analyseElectron(signalElectron, event->weight());
-			metAnalyserqcdNonIsoElectronSelection_->analyse(event, signalLepton, jets);
-			qcd_noniso_binned_HT_analyser_electron_->setScale(bjetWeight * efficiencyCorrection);
-
-			vector<double> fit_variable_values;
-			fit_variable_values.push_back(fabs(signalElectron->eta()));
-			fit_variable_values.push_back(Event::M3(jets));
-			fit_variable_values.push_back(Event::M_bl(bJets, signalElectron));
-			fit_variable_values.push_back(Event::angle_bl(bJets, signalElectron));
-
-			qcd_noniso_binned_HT_analyser_electron_->analyse(Event::HT(jets), fit_variable_values, event->weight());
-
-			for (unsigned int metIndex = 0; metIndex < METAlgorithm::NUMBER_OF_METALGORITHMS; ++metIndex) {
-				if (!MET::isAvailableInNTupleVersion(Globals::NTupleVersion, metIndex))
-					continue;
-				bool isMCOnlyMET = MET::isMCOnlyMETType(metIndex);
-				//skip MC only MET entries
-				if (isMCOnlyMET && event->isRealData())
-					continue;
-				string metPrefix = METAlgorithm::names.at(metIndex);
-				const METPointer met(event->MET((METAlgorithm::value) metIndex));
-
-				qcd_noniso_binned_MET_analyser_electron_.at(metIndex)->setScale(bjetWeight * efficiencyCorrection);
-				qcd_noniso_binned_MET_analyser_electron_.at(metIndex)->analyse(met->et(),
-						fit_variable_values, event->weight());
-
-				qcd_noniso_binned_ST_analyser_electron_.at(metIndex)->setScale(bjetWeight * efficiencyCorrection);
-				qcd_noniso_binned_ST_analyser_electron_.at(metIndex)->analyse(Event::ST(jets, signalElectron, met),
-						fit_variable_values, event->weight());
-
-				qcd_noniso_binned_MT_analyser_electron_.at(metIndex)->setScale(bjetWeight * efficiencyCorrection);
-				qcd_noniso_binned_MT_analyser_electron_.at(metIndex)->analyse(Event::MT(signalElectron, met),
-						fit_variable_values, event->weight());
-
-				qcd_noniso_binned_WPT_analyser_electron_.at(metIndex)->setScale(bjetWeight * efficiencyCorrection);
-				qcd_noniso_binned_WPT_analyser_electron_.at(metIndex)->analyse(Event::WPT(signalElectron, met),
-						fit_variable_values, event->weight());
-			}
-			//bbar analysis part
-			histMan_->setCurrentHistogramFolder(histogramFolder_ + "/EPlusJets/QCD non iso e+jets");
-			if (numberOfBjets > 1) {
-				unsigned int numberOfCombinations(1);
-				for (unsigned int i = 2; i < numberOfBjets; ++i)
-					numberOfCombinations += i;
-				for (unsigned int i = 0; i < numberOfBjets; ++i) {
-					for (unsigned int j = i + 1; j < numberOfBjets; ++j) {
-						double invMass = bJets.at(i)->invariantMass(bJets.at(j));
-						//conserve event weight by normalising the number of combinations
-						double weight = event->weight() * bjetWeight * efficiencyCorrection/ numberOfCombinations;
-						histMan_->H1D_BJetBinned("bjet_invariant_mass")->Fill(invMass, weight);
-					}
-				}
-			}
-		}
-	}
->>>>>>> Electron and muon ref selections work in AT.  QCD selections are WIPs
 
 		double bjetWeight = 1;
 		histMan_->setCurrentJetBin(jets.size());
