@@ -1,4 +1,4 @@
-mc_path = '/hdfs/TopQuarkGroup/run2/ntuples/v1/'
+mc_path = '/hdfs/TopQuarkGroup/run2/ntuples/v2/'
 data_path = ''
 datasets = {
             'TTJet' : [ mc_path + 'TTJets_Madgraph_PU20bx25_test.root'],
@@ -108,6 +108,9 @@ if sample in ['TTJets-mcatnlo','TTJets-powheg']:
 #File for pile-up re-weighting
 PUFile = toolsFolder + "data/" + settings['PUFile']
 getMuonScaleFactorsFromFile = False
+getElectronScaleFactorsFromFile = False
+ElectronIdIsoScaleFactorsFile = 'noFile.root'
+ElectronTriggerScaleFactorsFile = 'noFile.root'
 MuonScaleFactorsFile = toolsFolder + "data/" + settings['MuonScaleFactors']
 getHadronTriggerFromFile = True
 hadronTriggerFile = ''
@@ -128,7 +131,7 @@ for setting,value in settings.iteritems():
 inputFiles = datasets[sample]
 
 #number of events to be processed
-maxEvents = 0# 0 == all
+maxEvents = 10000# 0 == all
 
 #Jet Energy Resolutions files (L7 corrections)
 bJetResoFile = toolsFolder + "data/bJetReso.root"

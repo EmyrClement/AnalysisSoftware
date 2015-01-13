@@ -8,35 +8,32 @@
 #include "../../interface/Analysers/TTbar_plus_X_analyser.h"
 #include "../../interface/BTagWeight.h"
 #include "../../interface/GlobalVariables.h"
-//#include "../../interface/TopPairEventCandidate.h"
-//signal selections
-#include "../../interface/Selections/TopPairEPlusJetsReferenceSelection.h"
-#include "../../interface/Selections/TopPairMuPlusJetsReferenceSelection.h"
-//QCD selections w.r.t signal ref selection
+#include "../../interface/Event.h"
+
 #include "../../interface/Selections/QCDNonIsolatedElectronSelection.h"
 #include "../../interface/Selections/QCDConversionsSelection.h"
 #include "../../interface/Selections/QCDPFRelIsoEPlusJetsSelection.h"
 //muons
 #include "../../interface/Selections/QCDPFRelIsoMuPlusJetsSelection.h"
 #include "../../interface/Selections/QCDNonIsolatedMuonSelection.h"
-
+ 
 namespace BAT {
 
 void TTbar_plus_X_analyser::analyse(const EventPtr event) {
 	ePlusJetsSignalAnalysis(event);
 	// ePlusJetsQcdAnalysis(event);
-	// muPlusJetsSignalAnalysis(event);
+	muPlusJetsSignalAnalysis(event);
 	// muPlusJetsQcdAnalysis(event);
 }
 
 void TTbar_plus_X_analyser::ePlusJetsSignalAnalysis(const EventPtr event) {
 	// if (topEplusJetsRefSelection_->passesFullSelectionExceptLastTwoSteps(event)) {
 	if ( event->PassesElectronSelection() ) {
-		const JetCollection jets(event->getCleanedJets( true ));
-		unsigned int numberOfBjets = event->getNBJets( true );
-		const JetCollection bJets(event->getCleanedBJets( true ));
+		const JetCollection jets(event->getCleanedJets( SelectionCriteria::ElectronPlusJetsReference ));
+		unsigned int numberOfBjets = event->getNBJets( SelectionCriteria::ElectronPlusJetsReference );
+		const JetCollection bJets(event->getCleanedBJets( SelectionCriteria::ElectronPlusJetsReference ));
 
-		const LeptonPointer signalLepton = event->getSignalLepton( true );
+		const LeptonPointer signalLepton = event->getSignalLepton( SelectionCriteria::ElectronPlusJetsReference );
 
 		double bjetWeight = 1;
 		histMan_->setCurrentJetBin(jets.size());
@@ -132,9 +129,8 @@ void TTbar_plus_X_analyser::ePlusJetsSignalAnalysis(const EventPtr event) {
 }
 
 void TTbar_plus_X_analyser::ePlusJetsQcdAnalysis(const EventPtr event) {
-	//selection with respect to reference selection
-	if (qcdNonIsoElectronSelection_->passesSelectionUpToStep(event,
-			TTbarEPlusJetsReferenceSelection::AtLeastFourGoodJets)) {
+	if ( event->PassesElectronQCDSelection() ) {
+
 		const JetCollection jets(qcdNonIsoElectronSelection_->cleanedJets(event));
 		const JetCollection bJets(qcdNonIsoElectronSelection_->cleanedBJets(event));
 		const JetPointer fourthJet = jets[3];
@@ -359,12 +355,12 @@ void TTbar_plus_X_analyser::ePlusJetsQcdAnalysis(const EventPtr event) {
 void TTbar_plus_X_analyser::muPlusJetsSignalAnalysis(const EventPtr event) {
 
 	// if (topMuplusJetsRefSelection_->passesFullSelectionExceptLastTwoSteps(event)) {
-	if (true) {
-		const JetCollection jets(event->getCleanedJets( false ));
-		unsigned int numberOfBjets = event->getNBJets( false );
-		const JetCollection bJets(topEplusJetsRefSelection_->cleanedBJets(event));
+	if ( event->PassesMuonSelection() ) {
+		const JetCollection jets(event->getCleanedJets( SelectionCriteria::MuonPlusJetsReference ));
+		unsigned int numberOfBjets = event->getNBJets( SelectionCriteria::MuonPlusJetsReference );
+		const JetCollection bJets(event->getCleanedBJets( SelectionCriteria::MuonPlusJetsReference ));
 
-		const LeptonPointer signalLepton = event->getSignalLepton( false );
+		const LeptonPointer signalLepton = event->getSignalLepton( SelectionCriteria::MuonPlusJetsReference );
 
 		double bjetWeight = 1;
 		histMan_->setCurrentJetBin(jets.size());
