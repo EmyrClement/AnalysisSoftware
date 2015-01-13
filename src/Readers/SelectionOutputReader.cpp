@@ -70,6 +70,7 @@ SelectionOutputReader::SelectionOutputReader(TChainPointer input, unsigned int s
 		cleanedJetsIndexReader = VariableReader<MultiUIntPointer>(input, "TopPairMuonPlusJetsQCDSelection.cleanedJetIndex");		
 		cleanedBJetsIndexReader = VariableReader<MultiUIntPointer>(input, "TopPairMuonPlusJetsQCDSelection.cleanedBJetIndex");
 	}
+
 }
 
 void SelectionOutputReader::initialise() {
