@@ -10,13 +10,6 @@
 #include "../../interface/GlobalVariables.h"
 #include "../../interface/Event.h"
 
-#include "../../interface/Selections/QCDNonIsolatedElectronSelection.h"
-#include "../../interface/Selections/QCDConversionsSelection.h"
-#include "../../interface/Selections/QCDPFRelIsoEPlusJetsSelection.h"
-//muons
-#include "../../interface/Selections/QCDPFRelIsoMuPlusJetsSelection.h"
-#include "../../interface/Selections/QCDNonIsolatedMuonSelection.h"
- 
 namespace BAT {
 
 void TTbar_plus_X_analyser::analyse(const EventPtr event) {
@@ -62,6 +55,9 @@ void TTbar_plus_X_analyser::ePlusJetsSignalAnalysis(const EventPtr event) {
 
 		vertexAnalyserEPlusJetsRefSelection_->analyse(event);
 		jetAnalyserEPlusJetsRefSelection_->analyse(event);
+
+		wAnalyserEPlusJetsRefSelection_->setScale(bjetWeight * efficiencyCorrection);
+		wAnalyserEPlusJetsRefSelection_->analyseHadronicW(event, jets, bJets);
 
 		ref_selection_binned_HT_analyser_electron_->setScale(bjetWeight * efficiencyCorrection);
 
@@ -284,6 +280,9 @@ void TTbar_plus_X_analyser::muPlusJetsSignalAnalysis(const EventPtr event) {
 		vertexAnalyserMuPlusJetsRefSelection_->analyse(event);
 		jetAnalyserMuPlusJetsRefSelection_->analyse(event);
 
+		wAnalyserMuPlusJetsRefSelection_->setScale(bjetWeight * efficiencyCorrection);
+		wAnalyserMuPlusJetsRefSelection_->analyseHadronicW(event, jets, bJets);
+
 		ref_selection_binned_HT_analyser_muon_->setScale(bjetWeight * efficiencyCorrection);
 		vector<double> fit_variable_values;
 		fit_variable_values.push_back(fabs(signalMuon->eta()));
@@ -412,17 +411,13 @@ void TTbar_plus_X_analyser::createHistograms() {
 	jetAnalyserEPlusJetsRefSelection_->createHistograms();
 	jetAnalyserMuPlusJetsRefSelection_->createHistograms();
 
+	// W boson simple reconstruction
+	wAnalyserEPlusJetsRefSelection_->createHistograms();
+	wAnalyserMuPlusJetsRefSelection_->createHistograms();
 }
 
 TTbar_plus_X_analyser::TTbar_plus_X_analyser(HistogramManagerPtr histMan, std::string histogramFolder) :
 		BasicAnalyser(histMan, histogramFolder), //
-		topEplusJetsRefSelection_(new TopPairEPlusJetsReferenceSelection()), //
-		topMuplusJetsRefSelection_(new TopPairMuPlusJetsReferenceSelection()), //
-		//QCD selections with respect to reference selection
-		qcdNonIsoElectronSelection_(new QCDNonIsolatedElectronSelection()), //
-		qcdConversionSelection_(new QCDConversionsSelection()), //
-		qcd_noniso_muon_plus_jets_selection_(new QCDNonIsolatedMuonSelection()), //
-		qcdPFRelIsoEPlusJetsSelection_(new QCDPFRelIsoEPlusJetsSelection()), //
 		//analysers
 		//signal regions
 		metAnalyserEPlusJetsRefSelection_(new METAnalyser(histMan, histogramFolder + "/EPlusJets/Ref selection/MET")), //
@@ -501,6 +496,8 @@ TTbar_plus_X_analyser::TTbar_plus_X_analyser(HistogramManagerPtr histMan, std::s
 		jetAnalyserEPlusJetsRefSelection_(new JetAnalyser(histMan, histogramFolder + "/EPlusJets/Ref selection/Jets")), //
 		jetAnalyserMuPlusJetsRefSelection_(
 				new JetAnalyser(histMan, histogramFolder + "/MuPlusJets/Ref selection/Jets")), //
+		wAnalyserEPlusJetsRefSelection_(new WAnalyser(histMan, histogramFolder + "/EPlusJets/Ref selection/W Bosons")), //
+		wAnalyserMuPlusJetsRefSelection_(new WAnalyser(histMan, histogramFolder + "/MuPlusJets/Ref selection/W Bosons")), //
 		electron_variables_(), //
 		muon_variables_() {
 

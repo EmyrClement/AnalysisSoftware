@@ -12,20 +12,19 @@
 
 namespace BAT {
 
-class MTtbarAnalyser: public BAT::BasicAnalyser {
+class WAnalyser: public BAT::BasicAnalyser {
 public:
-	MTtbarAnalyser(HistogramManagerPtr histMan, std::string histogramFolder = "WAnalysis");
-	virtual ~MTtbarAnalyser();
+	WAnalyser(HistogramManagerPtr histMan, std::string histogramFolder = "WAnalysis");
+	virtual ~WAnalyser();
 	void analyse(const EventPtr);
+	void analyseHadronicW(const EventPtr, const JetCollection jets, const JetCollection bjets);
 
 	void createHistograms();
 
 protected:
-	void analyseHadronicW(const EventPtr);
 	void fillHistograms(std::string subcollection, std::string suffix = "");
-
-	void createHistogramsFor(std::string collection);
 };
-
+typedef boost::scoped_ptr<WAnalyser> WAnalyserLocalPtr;
+typedef boost::shared_ptr<WAnalyser> WAnalyserPtr;
 } /* namespace BAT */
 #endif /* WANALYSER_H_ */
