@@ -43,7 +43,7 @@ while [ $local_process -lt $range_for_loop ] ; do
 	# fi
 
 	log_file=${sample}_${analysisMode}_${energy}TeV_${cmssw_version}.log
-	${exe} ${toolsFolder}python/${python_config} ${TQAFPath} &> $log_file &
+	sample="$sample" analysisMode="$analysisMode" ${exe} ${toolsFolder}python/${python_config} ${TQAFPath} &> $log_file &
 	
 	let local_process+=1
 done

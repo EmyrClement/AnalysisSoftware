@@ -27,6 +27,8 @@ analysis_modes = ['central',
                  ]
 samples = [
           'TTJet',
+          'TTJet_PU30bx50',
+
           'DYJetsToLL',
           'WJets',
           
@@ -46,7 +48,7 @@ ignore_samples_7TeV = []
 ignore_samples_8TeV = []
 
 def build_matrix(energy):
-    ignore_samples = None
+    ignore_samples = []
     if energy == 7:
         ignore_samples = ignore_samples_7TeV
     if energy == 8:
@@ -73,6 +75,7 @@ def main(options, args = []):
         return options.operation
     # now the dynamic options
     matrix = build_matrix(options.energy)
+
     if options.return_n_jobs:
         return len(matrix)
     
@@ -97,10 +100,8 @@ def parse_args(parameters = []):
                        type = int  )
     parser.add_option( '--cores', dest = 'cores', help = 'cores',
                        type = int  )
-    parser.add_option( '--sample', dest = 'sample', help = 'sample',
-                       default = samples[0] )
-    parser.add_option( '--mode', dest = 'mode', help = 'mode', 
-                       default = analysis_modes[0])
+    parser.add_option( '--sample', dest = 'sample', help = 'sample' )
+    parser.add_option( '--mode', dest = 'mode', help = 'mode')
     parser.add_option( '--cmssw', dest = 'cmssw', 
                        help = 'cmssw version (53X|73X|74X', default = '73X' )
     parser.add_option( '--operation', dest = 'operation', 
