@@ -1,7 +1,10 @@
-mc_path = '/hdfs/TopQuarkGroup/run2/ntuples/v2/'
+mc_path = '/hdfs/TopQuarkGroup/run2/ntuples/v3/'
 data_path = ''
 datasets = {
             'TTJet' : [ mc_path + 'TTJets_Madgraph_PU20bx25_test.root'],
+            'TTJet_PU30bx50' : [ mc_path + 'TTJets_Madgraph_PU30bx50.root'],
+            'TTJets_PU4bx50' : [ mc_path + 'TTJets_Madgraph_PU4bx50.root'],
+
             'DYJetsToLL' : [ mc_path + 'DYJetsToLL_M50_PU20bx25.root' ],
             'WJets' : [ mc_path + 'WJets_PU20bx25.root' ],
 
@@ -131,7 +134,7 @@ for setting,value in settings.iteritems():
 inputFiles = datasets[sample]
 
 #number of events to be processed
-maxEvents = 10000# 0 == all
+maxEvents = 0 # 0 == all
 
 #Jet Energy Resolutions files (L7 corrections)
 bJetResoFile = toolsFolder + "data/bJetReso.root"
