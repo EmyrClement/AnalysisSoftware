@@ -17,24 +17,42 @@ using namespace BAT;
 
 void HitFitAnalyser::analyse(const EventPtr event) {
 	weight_ = event->weight() * prescale_ * scale_;
-	//fit only the events that pass full ttbar selection
-	if (!topEplusJetsRefSelection_->passesFullSelectionExceptLastTwoSteps(event))
-		;
-	return;
+	// //fit only the events that pass full ttbar selection
+	// if (!topEplusJetsRefSelection_->passesFullSelectionExceptLastTwoSteps(event))
+	// 	;
+	// return;
 
-	const JetCollection jets = topEplusJetsRefSelection_->cleanedJets(event);
-	LeptonPointer selectedLepton = topEplusJetsRefSelection_->signalLepton(event);
-	METPointer met = event->MET();
+	const JetCollection jets(event->getCleanedJets( SelectionCriteria::ElectronPlusJetsReference ));
+	const JetCollection bJets(event->getCleanedBJets( SelectionCriteria::ElectronPlusJetsReference ));
+	const LeptonPointer selectedLepton = event->getSignalLepton( SelectionCriteria::ElectronPlusJetsReference );
 
-	histMan_->H1D("m3_diff")->Fill(fabs(truthMatchEvent.M3() - TtbarHypothesis::M3(jets)));
+	string metPrefix = METAlgorithm::names.at(0);
+	const METPointer met(event->MET((METAlgorithm::value) 0));
 
-	boost::scoped_ptr<ChiSquaredBasedTopPairReconstruction> chi2Reco(
-			new ChiSquaredBasedTopPairReconstruction(selectedLepton, met, jets));
-	if (!chi2Reco->meetsInitialCriteria()) { //reports details on failure and skips event
-		cout << chi2Reco->getDetailsOnFailure();
-		return;
-	}
-	TtbarHypothesisPointer bestTopHypothesis = chi2Reco->getBestSolution();
+	histMan_->setCurrentHistogramFolder(histogramFolder_);
+
+	// cout << "Lepton eta : " << selectedLepton->eta() << endl;
+	// for ( unsigned int i = 0; i < jets.size(); ++i ) {
+	// 	cout << "Jet " << i << " eta : " << jets[i]->eta() << endl;
+	// }
+
+
+	// const JetCollection jets = topEplusJetsRefSelection_->cleanedJets(event);
+	// LeptonPointer selectedLepton = topEplusJetsRefSelection_->signalLepton(event);
+	// METPointer met = event->MET();
+
+	// histMan_->H1D("m3_diff")->Fill(fabs(truthMatchEvent.M3() - TtbarHypothesis::M3(jets)));
+
+	// cout << "Doing chi2" << endl;
+	// boost::scoped_ptr<ChiSquaredBasedTopPairReconstruction> chi2Reco(
+	// 		new ChiSquaredBasedTopPairReconstruction(selectedLepton, met, jets));
+	// if (!chi2Reco->meetsInitialCriteria()) { //reports details on failure and skips event
+	// 	cout << chi2Reco->getDetailsOnFailure();
+	// 	return;
+	// }
+	// cout << "Done chi2" << endl;
+	// TtbarHypothesisPointer bestTopHypothesis = chi2Reco->getBestSolution();
+	// cout << "Got results" << endl;
 
 	//set MC matching flag
 	if (event->getDataType() == DataType::TTJets)
@@ -49,8 +67,6 @@ void HitFitAnalyser::analyse(const EventPtr event) {
 	//temporary file for jet fit info (ugly but works)
 	string tempFileName = "temp.txt";
 	ofstream tempFile(tempFileName.c_str());
-
-	histMan_->setCurrentHistogramFolder("hitfitStudy");
 
 	if (Globals::produceFitterASCIIoutput) {
 		//write the event info into ASCII file
@@ -243,7 +259,7 @@ void HitFitAnalyser::analyse(const EventPtr event) {
 
 		//pass hitfit event into BAT format
 		lepton_charge = selectedLepton->charge();
-		BAT::TtbarHypothesis newHyp = BatEvent(hitfitResult[bestX2pos].ev());
+		// BAT::TtbarHypothesis newHyp = BatEvent(hitfitResult[bestX2pos].ev());
 
 		if (Globals::produceFitterASCIIoutput) {
 			//outFile << "goodCombi: " << hitfitResult[bestX2pos].mt() << "  ";
@@ -292,7 +308,7 @@ HitFitAnalyser::HitFitAnalyser(boost::shared_ptr<HistogramManager> histMan, std:
 		outFile(outFileName.c_str()), //
 		// The following five initializers read the config parameters for the
 		// ASCII text files which contains the physics object resolutions.
-		FitterPath_(Globals::TQAFPath), //
+		FitterPath_("/storage/ec6821/AnalysisTools/test/CMSSW_7_3_0/src/"), //
 		hitfitDefault_(FitterPath_ + "TopQuarkAnalysis/TopHitFit/data/setting/RunHitFitConfiguration.txt"), //
 		hitfitElectronResolution_(
 				FitterPath_ + "TopQuarkAnalysis/TopHitFit/data/resolution/tqafElectronResolution.txt"), //
@@ -495,7 +511,7 @@ HitFitAnalyser::~HitFitAnalyser() {
 }
 
 void HitFitAnalyser::createHistograms() {
-	histMan_->setCurrentHistogramFolder("hitfitStudy");
+	histMan_->setCurrentHistogramFolder(histogramFolder_);
 	histMan_->addH1D("AllJetsPt", "All jets Pt", 100, 0., 600.);
 	histMan_->addH1D("FittedTopMassAllSolutions", "Fitted top mass all solutions", 100, 0., 400.);
 	histMan_->addH1D("FitChiSquaredAllSolutions", "Fit chi-squared all solutions", 100, 0., 20.);

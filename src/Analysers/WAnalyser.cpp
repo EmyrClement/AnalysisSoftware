@@ -39,7 +39,30 @@ void WAnalyser::analyseHadronicW(const EventPtr event, const JetCollection jets,
 			JetPointer jet1 = jets[jet1Index];
 			JetPointer jet2 = jets[jet2Index];
 
-			if (jet1->pt()<=30 || jet2->pt()<=30 ) continue;
+			// if (jet1->pt()<=30 || jet2->pt()<=30 ) continue;
+
+			// if ( fabs(jet1->eta())>2.5 || fabs(jet2->eta())>2.5) continue;
+			// // 	cout << "Jets with large eta : " << jet1->eta() << " " << jet2->eta() << endl;
+
+			// if ( jet1->NOD() <=1 || jet1->NHF() >= 0.99 || jet1->NEF() >= 0.99) {
+			// 	continue;
+			// }
+			// if ( jet2->NOD() <=1 || jet2->NHF() >= 0.99 || jet2->NEF() >= 0.99) {
+			// 	continue;
+			// }
+
+			// if ( fabs(jet1->eta())<2.4 ){
+			// 	if ( jet1->CEF() >= 0.99 || jet1->CHF() <= 0 || jet1->NCH() <= 0 ) {
+			// 		continue;
+			// 	}
+
+			// }
+
+			// if ( fabs(jet2->eta())<2.4 ){
+			// 	if ( jet2->CEF() >= 0.99 || jet2->CHF() <= 0 || jet2->NCH() <= 0 ){
+			// 		continue;
+			// 	}
+			// }
 
 			Particle hadronicW(*jet1 + *jet2);
 
@@ -47,6 +70,8 @@ void WAnalyser::analyseHadronicW(const EventPtr event, const JetCollection jets,
 			histMan_->H1D("hadronicWMass")->Fill(hadronicW.mass() , weight_);
 			histMan_->H1D("jetPt")->Fill(jet1->pt() , weight_);
 			histMan_->H1D("jetPt")->Fill(jet2->pt() , weight_);
+			histMan_->H1D("jetEta")->Fill(jet1->eta() , weight_);
+			histMan_->H1D("jetEta")->Fill(jet2->eta() , weight_);
 		}
 	}
 }
@@ -75,6 +100,7 @@ void WAnalyser::createHistograms() {
 
 	histMan_->addH1D("hadronicWMass", "hadronic W mass; m(W_{had}) [GeV]; events/1 GeV", 500, 0, 500);
 	histMan_->addH1D("jetPt", "jet pt; p_{t} [GeV]; events/1 GeV", 500, 0, 500);
+	histMan_->addH1D("jetEta", "jet eta; #eta; events/0.06", 100, -3, 3);
 
 }
 
