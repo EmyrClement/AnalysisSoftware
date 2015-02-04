@@ -27,8 +27,12 @@ analysis_modes = ['central',
                  ]
 samples = [
           'TTJet',
-          'TTJet_PU30bx50',
-
+          'TTJets_Madgraph_PU30bx50',
+          'TTJets_Madgraph_PU4bx50',
+          'TT_Pythia8',
+          'TT_Pythia8_PU30bx50',
+          'TT_Pythia8_PU40bx25',
+          
           'DYJetsToLL',
           'WJets',
           
@@ -37,11 +41,20 @@ samples = [
           'GJets_600toInf',
           'QCD_EMEnriched_20to30',
           'QCD_EMEnriched_30to80',
+          'QCD_EMEnriched_80to170',
+
+          'QCD_bcToE_20to30',
           'QCD_bcToE_30to80',
+          'QCD_bcToE_80to170',
           'QCD_bcToE_170toInf',
 
-          'TToLeptons_s', 'TToLeptons_t', 'T_tW', 
-          'TBarToLeptons_s', 'TBarToLeptons_t', 'Tbar_tW', 
+          'QCD_MuEnriched_20toInf',
+          'QCD_MuEnriched_30to50',
+          'QCD_MuEnriched_50to80',
+          'QCD_MuEnriched_80to120',
+
+          'TToLeptons_s', 'TToLeptons_t', 'T_tw', 
+          'TBarToLeptons_s', 'TBarToLeptons_t', 'Tbar_tw', 
           ]
 
 ignore_samples_7TeV = []

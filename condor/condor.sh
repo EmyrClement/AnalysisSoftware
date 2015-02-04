@@ -11,7 +11,7 @@
 # - sample (which sample to analyse)
 # or at least the workload
 NOW=$(date +"%d-%m-%Y")
-tar -cf Analysis.tar BristolAnalysis/Tools --exclude="Debug*" --exclude="Release*" --exclude="Test*" --exclude="build*" --exclude="CMakeFiles" --exclude=".git*"
+tar -cf Analysis.tar BristolAnalysis/Tools TopQuarkAnalysis/TopHitFit/ --exclude="Debug*" --exclude="Release*" --exclude="Test*" --exclude="build*" --exclude="CMakeFiles" --exclude=".git*"
 memory_per_job=800
 total_memory=$memory_per_job
 echo "$@"
