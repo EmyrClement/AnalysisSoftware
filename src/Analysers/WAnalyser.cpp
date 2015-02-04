@@ -13,10 +13,11 @@ namespace BAT {
 
 void WAnalyser::analyse(const EventPtr event) {
 	// weight_ = event->weight();
-
 }
 
 void WAnalyser::analyseHadronicW(const EventPtr event, const JetCollection jets, const JetCollection bjets) {
+
+	weight_ = event->weight();
 
 	// Get cleaned jets that aren't b tagged
 	JetCollection jetsWithoutBs;
@@ -33,13 +34,16 @@ void WAnalyser::analyseHadronicW(const EventPtr event, const JetCollection jets,
 		if ( !isBJet ) jetsWithoutBs.push_back( thisJet );
 	}
 
-	// Get each jet pair combination and form a W candidate
-	for ( unsigned int jet1Index=0; jet1Index < jets.size()-1; ++jet1Index ) {
-		for ( unsigned int jet2Index=jet1Index+1; jet2Index < jets.size(); ++jet2Index ) {
-			JetPointer jet1 = jets[jet1Index];
-			JetPointer jet2 = jets[jet2Index];
 
-			// if (jet1->pt()<=30 || jet2->pt()<=30 ) continue;
+	if ( jetsWithoutBs.size() < 2 ) return;
+
+	// Get each jet pair combination and form a W candidate
+	for ( unsigned int jet1Index=0; jet1Index < jetsWithoutBs.size()-1; ++jet1Index ) {
+		for ( unsigned int jet2Index=jet1Index+1; jet2Index < jetsWithoutBs.size(); ++jet2Index ) {
+			JetPointer jet1 = jetsWithoutBs[jet1Index];
+			JetPointer jet2 = jetsWithoutBs[jet2Index];
+
+			if (jet1->pt()<=30 || jet2->pt()<=30 ) continue;
 
 			// if ( fabs(jet1->eta())>2.5 || fabs(jet2->eta())>2.5) continue;
 			// // 	cout << "Jets with large eta : " << jet1->eta() << " " << jet2->eta() << endl;
