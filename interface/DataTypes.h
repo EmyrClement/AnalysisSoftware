@@ -18,6 +18,12 @@ enum value {
 	SingleElectron,
 	SingleMu,
 	TTJets,
+	TTJets_Madgraph_PU30bx50,
+	TTJets_Madgraph_PU4bx50,
+	TT_Pythia8,
+	TT_Pythia8_PU30bx50,
+	TT_Pythia8_PU40bx25,
+
 	WJets,
 	W1Jet,
 	W2Jets,
@@ -34,6 +40,7 @@ enum value {
 	// BC->E
 	QCD_BCtoE_Pt20_30,
 	QCD_BCtoE_Pt30_80,
+	QCD_BCtoE_Pt80_170,
 	QCD_BCtoE_Pt170,
 	// EM Enriched
 	QCD_EMEnriched_Pt20_30,
@@ -42,7 +49,12 @@ enum value {
 	QCD_EMEnriched_Pt170_250,
 	QCD_EMEnriched_Pt250_350,
 	QCD_EMEnriched_Pt_350, //
-	QCD_MuEnrichedPt15_Pt_20,
+
+	QCD_MuEnriched_20ToInf,
+	QCD_MuEnriched_30to50,
+	QCD_MuEnriched_50to80,
+	QCD_MuEnriched_80to120,
+
 	QCD_MuEnrichedPt5_Pt15to20,
 	QCD_MuEnrichedPt5_Pt20to30,
 	QCD_MuEnrichedPt5_Pt30to50,
@@ -58,7 +70,9 @@ enum value {
 	//PHYS14 PJ samples
 	PhotonJets_Pt100to200,
 	PhotonJets_Pt200to400,
+	PhotonJets_Pt400to600,
 	PhotonJets_Pt600toInf,
+	
 	VQQ,
 	singleTop_And_W, //
 	singleTopTChannel,
@@ -104,6 +118,12 @@ const boost::array<std::string, DataType::NUMBER_OF_DATA_TYPES> names = { {
 		"SingleElectron",//
 		"SingleMu",//
 		"TTJet", //
+		"TTJets_Madgraph_PU30bx50", //
+		"TTJets_Madgraph_PU4bx50", //
+		"TT_Pythia8", //
+		"TT_Pythia8_PU30bx50", //
+		"TT_Pythia8_PU40bx25", //
+
 		"WJets", //
 		"W1Jet", //
 		"W2Jets", //
@@ -119,6 +139,7 @@ const boost::array<std::string, DataType::NUMBER_OF_DATA_TYPES> names = { {
 		//PHYS14 QCD samples
 		"QCD_bcToE_20to30", //
 		"QCD_bcToE_30to80", //
+		"QCD_bcToE_80to170", //
 		"QCD_bcToE_170toInf", //
 		"QCD_EMEnriched_20to30", //
 		"QCD_EMEnriched_30to80", //
@@ -126,8 +147,13 @@ const boost::array<std::string, DataType::NUMBER_OF_DATA_TYPES> names = { {
 		"QCD_EMEnriched_170to250", //
 		"QCD_EMEnriched_250to350", //
 		"QCD_EMEnriched_350", //
+
+		"QCD_MuEnriched_20toInf", //
+		"QCD_MuEnriched_30to50", //
+		"QCD_MuEnriched_50to80", //
+		"QCD_MuEnriched_80to120", //
+
 		//2011 & 2012 Muon QCD samples
-		"QCD_Pt_20_MuEnrichedPt_15", //
 		"QCD_Pt-15to20_MuEnrichedPt5", //
 		"QCD_Pt-20to30_MuEnrichedPt5", //
 		"QCD_Pt-30to50_MuEnrichedPt5", //
@@ -143,10 +169,11 @@ const boost::array<std::string, DataType::NUMBER_OF_DATA_TYPES> names = { {
 		//PHYS14 PJ samples
 		"GJets_100to200", //
 		"GJets_200to400", //
+		"GJets_400to600", //
 		"GJets_600toInf", //
 
 		"VqqJets", //
-		"T_tW", //
+		"T_tw", //
 		"TToLeptons_t", //
 		"TToLeptons_s", //
 		"Tbar_tw", //
