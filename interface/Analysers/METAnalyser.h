@@ -12,10 +12,15 @@
 #include "../RecoObjects/MET.h"
 #include "../RecoObjects/Particle.h"
 #include "../RecoObjects/Jet.h"
+
+// Move to NtupleManager
+#include "TTree.h"
+ 
 namespace BAT {
 
 class METAnalyser: public BAT::BasicAnalyser {
 public:
+	METAnalyser(HistogramManagerPtr histMan, TTreeManagerPtr tTreeMan, std::string histogramFolder = "METAnalysis");
 	METAnalyser(HistogramManagerPtr histMan, std::string histogramFolder = "METAnalysis");
 	virtual ~METAnalyser();
 	void analyse(const EventPtr);
@@ -23,6 +28,7 @@ public:
 	void analyse(const EventPtr, const ParticlePointer, const JetCollection);
 
 	void createHistograms();
+	void createTTrees();
 protected:
 	void analyseTransverseMass(const EventPtr, const ParticlePointer);
 	void analyse_ST(const EventPtr, const ParticlePointer, const JetCollection);

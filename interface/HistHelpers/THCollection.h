@@ -97,7 +97,6 @@ private:
 
     void writeDirectories() {
         std::string currentPath = "";
-
         for (unsigned short index = 0; index < directories.size(); ++index) {
             const std::string dir = directories.at(index);
 

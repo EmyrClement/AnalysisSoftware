@@ -14,9 +14,9 @@ namespace BAT {
 
 void TTbar_plus_X_analyser::analyse(const EventPtr event) {
 	ePlusJetsSignalAnalysis(event);
-	ePlusJetsQcdAnalysis(event);
+	// ePlusJetsQcdAnalysis(event);
 	muPlusJetsSignalAnalysis(event);
-	muPlusJetsQcdAnalysis(event);
+	// muPlusJetsQcdAnalysis(event);
 }
 
 void TTbar_plus_X_analyser::ePlusJetsSignalAnalysis(const EventPtr event) {
@@ -439,9 +439,15 @@ void TTbar_plus_X_analyser::createHistograms() {
 
 
 	//signal
+	cout << "Making met analyser electron histgorams" << endl;
 	metAnalyserEPlusJetsRefSelection_->createHistograms();
+	cout << "Making met analyser electron trees" << endl;
+	metAnalyserEPlusJetsRefSelection_->createTTrees();
 	electronAnalyserRefSelection_->createHistograms();
+	cout << "Making met analyser muon histgorams" << endl;
 	metAnalyserMuPlusJetsRefSelection_->createHistograms();
+	cout << "Making met analyser muon trees" << endl;
+	metAnalyserMuPlusJetsRefSelection_->createTTrees();
 	muonAnalyserRefSelection_->createHistograms();
 
 	vertexAnalyserEPlusJetsRefSelection_->createHistograms();
@@ -468,12 +474,12 @@ void TTbar_plus_X_analyser::createHistograms() {
 	hitFitAnalyserMuPlusJetsRefSelection_->createHistograms();
 }
 
-TTbar_plus_X_analyser::TTbar_plus_X_analyser(HistogramManagerPtr histMan, std::string histogramFolder) :
-		BasicAnalyser(histMan, histogramFolder), //
+TTbar_plus_X_analyser::TTbar_plus_X_analyser(HistogramManagerPtr histMan, TTreeManagerPtr ttreeMan, std::string histogramFolder) :
+		BasicAnalyser(histMan, ttreeMan, histogramFolder), //
 		//analysers
 		//signal regions
-		metAnalyserEPlusJetsRefSelection_(new METAnalyser(histMan, histogramFolder + "/EPlusJets/Ref selection/MET")), //
-		metAnalyserMuPlusJetsRefSelection_(new METAnalyser(histMan, histogramFolder + "/MuPlusJets/Ref selection/MET")), //
+		metAnalyserEPlusJetsRefSelection_(new METAnalyser(histMan, ttreeMan, histogramFolder + "/EPlusJets/Ref selection/MET")), //
+		metAnalyserMuPlusJetsRefSelection_(new METAnalyser(histMan, ttreeMan, histogramFolder + "/MuPlusJets/Ref selection/MET")), //
 		electronAnalyserRefSelection_(
 				new ElectronAnalyser(histMan, histogramFolder + "/EPlusJets/Ref selection/Electron", true)), //
 		muonAnalyserRefSelection_(new MuonAnalyser(histMan, histogramFolder + "/MuPlusJets/Ref selection/Muon", true)), //
@@ -483,14 +489,14 @@ TTbar_plus_X_analyser::TTbar_plus_X_analyser(HistogramManagerPtr histMan, std::s
 				new VertexAnalyser(histMan, histogramFolder + "/MuPlusJets/Ref selection/Vertices")), //
 		//QCD region
 		metAnalyserqcdNonIsoElectronSelection_(
-				new METAnalyser(histMan, histogramFolder + "/EPlusJets/QCD non iso e+jets/MET")), //
+				new METAnalyser(histMan, ttreeMan, histogramFolder + "/EPlusJets/QCD non iso e+jets/MET")), //
 		metAnalyserqcdNonIsoMuonSelection_(
-				new METAnalyser(histMan, histogramFolder + "/MuPlusJets/QCD non iso mu+jets/MET")), //
+				new METAnalyser(histMan, ttreeMan, histogramFolder + "/MuPlusJets/QCD non iso mu+jets/MET")), //
 		qcdNonIsoElectronAnalyser_(
 				new ElectronAnalyser(histMan, histogramFolder + "/EPlusJets/QCD non iso e+jets/Electron", true)), //
 		qcdNonIsoMuonAnalyser_(
 				new MuonAnalyser(histMan, histogramFolder + "/MuPlusJets/QCD non iso mu+jets/Muon", true)), //
-		metAnalyserqcdConversionSelection_(new METAnalyser(histMan, histogramFolder + "/EPlusJets/QCDConversions/MET")), //
+		metAnalyserqcdConversionSelection_(new METAnalyser(histMan, ttreeMan, histogramFolder + "/EPlusJets/QCDConversions/MET")), //
 		qcdConversionsElectronAnalyser_(
 				new ElectronAnalyser(histMan, histogramFolder + "/EPlusJets/QCDConversions/Electron", true)), //
 		qcdEPlusjetsPFRelIsoElectronAnalyser_(
