@@ -18,6 +18,7 @@ public:
 	virtual ~WAnalyser();
 	void analyse(const EventPtr);
 	void analyseHadronicW(const EventPtr, const JetCollection jets, const JetCollection bjets);
+	void analyseHadronicW_partons(const EventPtr);
 
 	void createHistograms();
 
