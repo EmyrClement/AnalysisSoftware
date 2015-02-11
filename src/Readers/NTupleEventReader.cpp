@@ -45,6 +45,8 @@ NTupleEventReader::NTupleEventReader() :
 		selectionOutputReader_electronQCDConversion(new SelectionOutputReader(input, SelectionCriteria::ElectronPlusJetsQCDConversion)), //
 		selectionOutputReader_muonQCDNonisolated(new SelectionOutputReader(input, SelectionCriteria::MuonPlusJetsQCDNonIsolated)), //
 
+		ttGenInfoReader( new TTGenReader(input)), //
+
 		runNumberReader(new VariableReader<unsigned int>(input, "Event.Run")), //
 		eventNumberReader(new VariableReader<unsigned int>(input, "Event.Number")), //
 		lumiBlockReader(new VariableReader<unsigned int>(input, "Event.LumiSection")), //
@@ -135,10 +137,12 @@ const EventPtr NTupleEventReader::getNextEvent() {
 	currentEvent->setElectronConversionSelectionOutputInfo( selectionOutputReader_electronQCDConversion->getSelectionOutputInfo() );
 	currentEvent->setMuonQCDNonisolatedSelectionOutputInfo( selectionOutputReader_muonQCDNonisolated->getSelectionOutputInfo() );
 
-	// if (!currentEvent->isRealData()) {
+	currentEvent->setTTGenInfo( ttGenInfoReader->getTTGenInfo());
+
+	if (!currentEvent->isRealData()) {
 	// 	std::cout << "Gen Particles etc." << std::endl;
 	// 	currentEvent->setGenParticles(genParticleReader->getGenParticles());
-	// 	currentEvent->setGenJets(genJetReader->getGenJets());
+		currentEvent->setGenJets(genJetReader->getGenJets());
 	// 	currentEvent->setGenNumberOfPileUpVertices(*PileupInfoReader->getVariable());
 	// 	currentEvent->setPDFWeights(*PDFWeightsReader->getVariable());
 
@@ -150,7 +154,7 @@ const EventPtr NTupleEventReader::getNextEvent() {
 	// 		currentEvent->setPUWeightShiftDown(PUWeightShiftDown_->getVariable());
 	// 	}
 
-	// }
+	}
 
 	currentEvent->setJets(jetReader->getJets(currentEvent->isRealData()));
 
@@ -258,6 +262,8 @@ void NTupleEventReader::initiateReadersIfNotSet() {
 		selectionOutputReader_electronQCDNonisolated->initialise();
 		selectionOutputReader_electronQCDConversion->initialise();
 		selectionOutputReader_muonQCDNonisolated->initialise();
+
+		ttGenInfoReader->initialise();
 
 		runNumberReader->initialise();
 		eventNumberReader->initialise();
