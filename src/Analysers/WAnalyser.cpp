@@ -34,8 +34,8 @@ void WAnalyser::analyseHadronicW(const EventPtr event, const JetCollection jets,
 		if ( !isBJet ) jetsWithoutBs.push_back( thisJet );
 	}
 
-
 	if ( jetsWithoutBs.size() < 2 ) return;
+
 
 	// Need these for some gen level studies
 	const JetCollection genJets( event->GenJets() );
@@ -89,9 +89,51 @@ void WAnalyser::analyseHadronicW(const EventPtr event, const JetCollection jets,
 					}
 				}
 			}
-
 		}
 	}
+
+	//  Get jets that are fairly separated from other jets
+	// These jets are a further subset of jetsWithoutBs
+	JetCollection cleanedJets;
+	for ( unsigned int jet1Index=0; jet1Index < jetsWithoutBs.size(); ++jet1Index ) {
+		JetPointer jet1 = jetsWithoutBs[jet1Index];
+		double minDeltaR = 999.;
+		for ( unsigned int jet2Index=jet1Index+1; jet2Index < jetsWithoutBs.size(); ++jet2Index ) {
+
+			JetPointer jet2 = jetsWithoutBs[jet2Index];
+
+			double deltaRToOtherJet = jet1->deltaR( jet2 );
+
+			if ( deltaRToOtherJet < minDeltaR )
+				minDeltaR = deltaRToOtherJet;
+		}
+		if ( minDeltaR > 1 ) {
+			histMan_->H1D("minDeltaR_cleanedReco")->Fill( minDeltaR, weight_ );
+			cleanedJets.push_back( jet1 );
+		}
+	}
+
+	if ( cleanedJets.size() < 2 ) return;
+
+	// Get each jet pair combination and form a W candidate
+	for ( unsigned int jet1Index=0; jet1Index < cleanedJets.size()-1; ++jet1Index ) {
+		for ( unsigned int jet2Index=jet1Index+1; jet2Index < cleanedJets.size(); ++jet2Index ) {
+			JetPointer jet1 = cleanedJets[jet1Index];
+			JetPointer jet2 = cleanedJets[jet2Index];
+
+			if (jet1->pt()<=30 || jet2->pt()<=30 ) continue;
+
+			Particle hadronicW(*jet1 + *jet2);
+
+			histMan_->setCurrentHistogramFolder(histogramFolder_);
+			histMan_->H1D("hadronicWMass_cleanedReco")->Fill(hadronicW.mass() , weight_);
+			histMan_->H1D("jetPt_cleanedReco")->Fill(jet1->pt() , weight_);
+			histMan_->H1D("jetPt_cleanedReco")->Fill(jet2->pt() , weight_);
+			histMan_->H1D("jetEta_cleanedReco")->Fill(jet1->eta() , weight_);
+			histMan_->H1D("jetEta_cleanedReco")->Fill(jet2->eta() , weight_);
+		}
+	}
+
 }
 
 void WAnalyser::analyseHadronicW_partons(const EventPtr event) {
@@ -181,6 +223,12 @@ void WAnalyser::createHistograms() {
 	histMan_->addH1D("hadronicWMass_recoMatchedToPartons", "hadronic W mass from reco jets matched to partons; m(W_{had}) [GeV]; events/1 GeV", 500, 0, 500);
 	histMan_->addH1D("jetPt_recoMatchedToPartons", "reco jet matched to parton pt; p_{t} [GeV]; events/1 GeV", 500, 0, 500);
 	histMan_->addH1D("jetEta_recoMatchedToPartons", "reco jet matched to parton eta; #eta; events/0.06", 100, -3, 3);
+
+	histMan_->addH1D("hadronicWMass_cleanedReco", "hadronic W mass; m(W_{had}) [GeV]; events/1 GeV", 500, 0, 500);
+	histMan_->addH1D("jetPt_cleanedReco", "jet pt; p_{t} [GeV]; events/1 GeV", 500, 0, 500);
+	histMan_->addH1D("jetEta_cleanedReco", "jet eta; #eta; events/0.06", 100, -3, 3);
+	histMan_->addH1D("minDeltaR_cleanedReco", "deltaR to nearest jet; #Delta R; events/0.013", 100, 0, 1.3);
+
 
 }
 
