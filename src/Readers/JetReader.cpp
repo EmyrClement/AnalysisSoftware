@@ -12,6 +12,7 @@ namespace BAT {
 
 JetReader::JetReader() : //
 		energyReader(), ////
+		JECReader(), //
 		JECUncReader(),
 		L1OffJECReader(),
 		L2L3ResJECReader(),
@@ -20,6 +21,7 @@ JetReader::JetReader() : //
 		pxReader(), ////
 		pyReader(), ////
 		pzReader(), ////
+		energyRawReader(),
 		pxRawReader(),
 		pyRawReader(),
 		pzRawReader(),
@@ -48,6 +50,7 @@ JetReader::JetReader() : //
 }
 JetReader::JetReader(TChainPointer input, JetAlgorithm::value algo) :
 		energyReader(input, "Jets.Energy"), //
+		JECReader(input, "Jets.JEC"), //
 		JECUncReader(input, "Jets.JECUnc"), //
 		L1OffJECReader(input, "Jets.L1OffJEC"),
 		L2L3ResJECReader(input, "Jets.L2L3ResJEC"),
@@ -56,6 +59,7 @@ JetReader::JetReader(TChainPointer input, JetAlgorithm::value algo) :
 		pxReader(input, "Jets.Px"), //
 		pyReader(input, "Jets.Py"), //
 		pzReader(input, "Jets.Pz"), //
+		energyRawReader(input, "Jets.EnergyRAW"), //
 		pxRawReader(input, "Jets.PxRAW"), //
 		pyRawReader(input, "Jets.PyRAW"), //
 		pzRawReader(input, "Jets.PzRAW"), //
@@ -139,10 +143,21 @@ void JetReader::readJets(bool isRealData) {
 		jet->setUsedAlgorithm(usedAlgorithm);
 		jet->setMass(massReader.getVariableAt(jetIndex));
 		jet->setCharge(chargeReader.getVariableAt(jetIndex));
-		jet->setPxRaw(pxRawReader.getVariableAt(jetIndex));
-		jet->setPyRaw(pyRawReader.getVariableAt(jetIndex));
-		jet->setPzRaw(pzRawReader.getVariableAt(jetIndex));
 
+		double energyRaw = energyRawReader.getVariableAt(jetIndex);
+		double pxRaw = pxRawReader.getVariableAt(jetIndex);
+		double pyRaw = pyRawReader.getVariableAt(jetIndex);
+		double pzRaw = pzRawReader.getVariableAt(jetIndex);
+		jet->setEnergyRaw(energyRaw);
+		jet->setPxRaw(pxRaw);
+		jet->setPyRaw(pyRaw);
+		jet->setPzRaw(pzRaw);
+
+		JetPointer rawJet(new Jet(energyRaw, pxRaw, pyRaw, pzRaw));
+		jet->set_raw_jet(rawJet);
+
+
+		jet->setJEC(JECReader.getVariableAt(jetIndex));
 		jet->setJECUnc(JECUncReader.getVariableAt(jetIndex));
 		jet->setL1OffJEC(L1OffJECReader.getVariableAt(jetIndex));
 		jet->setL2L3ResJEC(L2L3ResJECReader.getVariableAt(jetIndex));
@@ -184,6 +199,7 @@ void JetReader::readJets(bool isRealData) {
 
 void JetReader::initialise() {
 	energyReader.initialise();
+	JECReader.initialise();
 	JECUncReader.initialise();
 	L1OffJECReader.initialise();
 	L2L3ResJECReader.initialise();
@@ -192,6 +208,7 @@ void JetReader::initialise() {
 	pxReader.initialise();
 	pyReader.initialise();
 	pzReader.initialise();
+	energyRawReader.initialise();
 	pxRawReader.initialise();
 	pyRawReader.initialise();
 	pzRawReader.initialise();
