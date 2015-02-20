@@ -1,4 +1,4 @@
-mc_path = '/hdfs/TopQuarkGroup/run2/ntuples/v7/'
+mc_path = '/hdfs/TopQuarkGroup/run2/ntuples/v9/'
 data_path = ''
 datasets = {
             'TTJet' : [ mc_path + 'TTJets_Madgraph_PU20bx25.root' ],
