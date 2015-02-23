@@ -47,6 +47,8 @@
 #include "../interface/Analysers/DiffVariablesAnalyser.h"
 #include "../interface/Analysers/BinningAnalyser.h"
 
+#include "../interface/Analysers/PseudoTopAnalyser.h"
+
 class Analysis {
 private:
     boost::scoped_ptr<BAT::NTupleEventReader> eventReader;
@@ -76,6 +78,8 @@ private:
     boost::scoped_ptr<BAT::VertexAnalyser> vertexAnalyser;
     boost::scoped_ptr<BAT::DiffVariablesAnalyser> diffVariablesAnalyser;
     boost::scoped_ptr<BAT::BinningAnalyser> binningAnalyser;
+
+    BAT::PseudoTopAnalyserLocalPtr pseudoTopAnalyser_;
 
 public:
     Analysis(std::string fileForPileUpReweighting);

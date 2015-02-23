@@ -13,6 +13,7 @@
 #include "RecoObjects/Vertex.h"
 #include "RecoObjects/MET.h"
 #include "RecoObjects/MCParticle.h"
+#include "RecoObjects/PseudoTopParticles.h"
 #include "RecoObjects/SelectionOutputInfo.h"
 #include "RecoObjects/TTGenInfo.h"
 #include "DataTypes.h"
@@ -71,6 +72,7 @@ protected:
 
 	TTGenInfoPointer ttGenInfo_;
 
+	PseudoTopParticlesPointer pseudoTopParticles_;
 	MCParticleCollection genParticles;
 
 	METCollection mets_;
@@ -128,6 +130,7 @@ public:
 	void setElectronConversionSelectionOutputInfo(SelectionOutputInfo newSelectionOutputInfo);
 	void setMuonQCDNonisolatedSelectionOutputInfo(SelectionOutputInfo newSelectionOutputInfo);
 	void setTTGenInfo(TTGenInfoPointer ttGenInfo );
+	void setPseudoTopParticles(PseudoTopParticlesPointer newPseudoParticles );
 	void setMETs(const std::vector<METPointer> mets);
 	void setGenMET(const METPointer met);
 	void setTTbarHypothesis(const TtbarHypothesis newHypo);
@@ -190,6 +193,8 @@ public:
 	const bool PassesMuonQCDSelection() const;
 
 	const TTGenInfoPointer TTGenInfo() const;
+
+	const PseudoTopParticlesPointer PseudoTopParticles() const;
 
 	const LeptonPointer getSignalLepton( unsigned int selectionCriteria ) const;
 	const JetCollection getCleanedJets( unsigned int selectionCriteria ) const;
