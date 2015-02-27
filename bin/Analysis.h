@@ -48,6 +48,7 @@
 #include "../interface/Analysers/BinningAnalyser.h"
 
 #include "../interface/Analysers/PseudoTopAnalyser.h"
+#include "../interface/Analysers/UnfoldingRecoAnalyser.h"
 
 class Analysis {
 private:
@@ -80,6 +81,7 @@ private:
     boost::scoped_ptr<BAT::BinningAnalyser> binningAnalyser;
 
     BAT::PseudoTopAnalyserLocalPtr pseudoTopAnalyser_;
+    BAT::UnfoldingRecoAnalyserLocalPtr unfoldingRecoAnalyser_;
 
 public:
     Analysis(std::string fileForPileUpReweighting);
