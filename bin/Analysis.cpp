@@ -57,8 +57,8 @@ void Analysis::analyse() {
 
 		eventcountAnalyser->analyse(currentEvent);
 		ttbar_plus_X_analyser_->analyse(currentEvent);
-		treeMan->FillTrees();
 		pseudoTopAnalyser_->analyse(currentEvent);
+		treeMan->FillTrees();
 	}
 }
 
