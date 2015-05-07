@@ -63,7 +63,7 @@ void Analysis::analyse() {
 		if ( ( currentEvent->getDataType() == DataType::TTJets || currentEvent->getDataType() == DataType::TT_Pythia8 ) && Globals::treePrefix_ == "" ) {
 			pseudoTopAnalyser_->analyse(currentEvent);
 			unfoldingRecoAnalyser_->analyse(currentEvent);
-			likelihoodInputAnalyser_->analyse(currentEvent);
+			// likelihoodInputAnalyser_->analyse(currentEvent);
 		}
 		treeMan->FillTrees();
 	}
