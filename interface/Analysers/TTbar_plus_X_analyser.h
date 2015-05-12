@@ -140,6 +140,9 @@ private:
 	// HitFit Analyser
 	HitFitAnalyserLocalPtr hitFitAnalyserEPlusJetsRefSelection_;
 	HitFitAnalyserLocalPtr hitFitAnalyserMuPlusJetsRefSelection_;
+	HitFitAnalyserLocalPtr hitFitAnalyserEPlusJetsQCDSelection_;
+	HitFitAnalyserLocalPtr hitFitAnalyserEPlusJetsConversionSelection_;
+	HitFitAnalyserLocalPtr hitFitAnalyserMuPlusJetsQCDSelection_;
 
 	// variable definitions
 	std::vector<Variable> electron_variables_, muon_variables_;
