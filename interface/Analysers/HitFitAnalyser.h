@@ -74,6 +74,8 @@ public:
 	void setMCTTbarHypothesis(const TtbarHypothesis& mcEvent);
 	void createHistograms();
 	void createTrees();
+
+	int positionOfLastTTBarJet(const JetCollection jets);
 };
 typedef boost::scoped_ptr<HitFitAnalyser> HitFitAnalyserLocalPtr;
 typedef boost::shared_ptr<HitFitAnalyser> HitFitAnalyserPtr;
