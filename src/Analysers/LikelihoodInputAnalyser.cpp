@@ -58,7 +58,6 @@ void LikelihoodInputAnalyser::analyse(const EventPtr event) {
 		}
 	}
 
-
 	// Require one of the event selections to have been satisfied, and we have a genuine ttbar event
 	int selectionCriteria = -1;
 	if ( event->PassesElectronTriggerAndSelection() && event->isSemiLeptonicElectron() ) selectionCriteria = SelectionCriteria::ElectronPlusJetsReference;
@@ -188,7 +187,6 @@ void LikelihoodInputAnalyser::analyse(const EventPtr event) {
 
 LikelihoodInputAnalyser::LikelihoodInputAnalyser(HistogramManagerPtr histMan, boost::shared_ptr<TreeManager> treeMan, std::string histogramFolder ) :
 		BasicAnalyser(histMan, treeMan, histogramFolder){
-
 }
 
 LikelihoodInputAnalyser::~LikelihoodInputAnalyser() {

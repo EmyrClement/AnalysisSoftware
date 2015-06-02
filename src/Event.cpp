@@ -144,7 +144,7 @@ void Event::setJetTTBarPartons() {
 
 		FourVector partonFV = jet->matched_parton()->getFourVector();
 
-		if ( partonFV == quark->getFourVector() ) jet->set_ttbar_decay_parton( TTPartons::partonType::Quark );	
+		if ( partonFV == quark->getFourVector() ) jet->set_ttbar_decay_parton( TTPartons::partonType::Quark );
 		else if ( partonFV == quarkBar->getFourVector() ) jet->set_ttbar_decay_parton( TTPartons::partonType::QuarkBar );
 		else if ( partonFV == hadronicB->getFourVector() ) jet->set_ttbar_decay_parton( TTPartons::partonType::HadB );
 		else if ( partonFV == leptonicB->getFourVector() ) jet->set_ttbar_decay_parton( TTPartons::partonType::LepB );

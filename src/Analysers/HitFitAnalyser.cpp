@@ -22,6 +22,8 @@ BAT::TtbarHypothesis HitFitAnalyser::analyseAndReturn(const EventPtr event, cons
 	weight_ = event->weight() * prescale_ * scale_;
 	histMan_->setCurrentHistogramFolder(histogramFolder_);
 	treeMan_->setCurrentFolder(histogramFolder_);
+	treeMan_->Fill("EventWeight", weight_ );
+
 	// const JetCollection jets(event->getCleanedJets( SelectionCriteria::ElectronPlusJetsReference ));
 	// const JetCollection bJets(event->getCleanedBJets( SelectionCriteria::ElectronPlusJetsReference ));
 	// const LeptonPointer selectedLepton = event->getSignalLepton( SelectionCriteria::ElectronPlusJetsReference );
@@ -184,7 +186,6 @@ BAT::TtbarHypothesis HitFitAnalyser::analyseAndReturn(const EventPtr event, cons
 
 			treeMan_->Fill("FitChiSquaredAllSolutions",fitResult.chisq());
 
-
 		// 	histMan_->H1D("FittedTopMassAllSolutions")->Fill(fitResult.mt(), weight_);
 			// histMan_->H1D("FitChiSquaredAllSolutions")->Fill(fitResult.chisq(), weight_);
 		// 	histMan_->H1D("FitLogChiSqdAllSolutions")->Fill(log(fitResult.chisq()), weight_);
@@ -340,12 +341,29 @@ BAT::TtbarHypothesis HitFitAnalyser::BatEvent(const hitfit::Lepjets_Event& ev, c
 		}
 	}
 
+	for (BAT::JetCollection::const_iterator j = bJetsForFitting.begin(); j != bJetsForFitting.end(); ++i, ++j) {
+		FourVector hfJet = fourVectorFromHitFit(ev.jet(i).p());
+		int hfJType = ev.jet(i).type();
+//    if ((*j)->getFourVector().DeltaR(hfJet) < 0.005) {
+		if (hfJType != hitfit::unknown_label) {
+			BAT::Jet newJet(**j);
+			newJet.setFourVector(hfJet);
+			if (hfJType == hitfit::lepb_label)
+				*newLepB = newJet;
+			if (hfJType == hitfit::hadb_label)
+				*newHadB = newJet;
+			if (hfJType == hitfit::hadw1_label)
+				*newWj1 = newJet;
+			if (hfJType == hitfit::hadw2_label)
+				*newWj2 = newJet;
+		}
+	}
+
 	BAT::TtbarHypothesis hyp(newLepton, newMet, newLepB, newHadB, newWj1, newWj2);
 	hyp.combineReconstructedObjects();
 
 	// do MC matching study
 	if (do_MC_matching && SolutionCategoryHist != "") {
-
 
 		// Check if jets are in correct position
 		if ( ( newWj1->ttbar_decay_parton() == 3 || newWj1->ttbar_decay_parton() == 4 ) &&
@@ -470,7 +488,6 @@ BAT::TtbarHypothesis HitFitAnalyser::BatEvent(const hitfit::Lepjets_Event& ev, c
 
 	return hyp;
 }
-
 
 hitfit::Fit_Result HitFitAnalyser::performSecondKinematicFit(const hitfit::Lepjets_Event& unfittedEvent, const EventPtr event ) {
 
