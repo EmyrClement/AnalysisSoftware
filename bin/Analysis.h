@@ -60,8 +60,6 @@ private:
 
     BAT::LikelihoodInputAnalyserLocalPtr likelihoodInputAnalyser_;
 
-    BAT::LikelihoodInputAnalyserLocalPtr likelihoodInputAnalyser_;
-
 public:
     Analysis(std::string fileForPileUpReweighting);
     virtual ~Analysis();
