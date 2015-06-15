@@ -134,8 +134,7 @@ for setting,value in settings.iteritems():
 
 #number of events to be processed
 
-maxEvents = 0100000# 0 == all
-
+maxEvents = 0# 0 == all
 
 
 #Jet Energy Resolutions files (L7 corrections)
