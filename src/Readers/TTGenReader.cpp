@@ -82,7 +82,6 @@ TTGenReader::TTGenReader(TChainPointer input) :
     singleneutrinoPxReader(input, "Event.SingleNeutrinoPx"),
     singleneutrinoPyReader(input, "Event.SingleNeutrinoPy"),
     singleneutrinoPzReader(input, "Event.SingleNeutrinoPz"),
-    singleneutrinoEReader(input, "Event.SingleNeutrinoEnergy") {
     singleneutrinoEReader(input, "Event.SingleNeutrinoEnergy"),
 
     leptonicWPxReader(input, "Event.leptonicWPx"),

@@ -52,7 +52,7 @@ BAT::TtbarHypothesis HitFitAnalyser::analyseAndReturn(const EventPtr event, cons
 	histMan_->setCurrentHistogramFolder(histogramFolder_);
 
 	//set MC matching flag
-	if (event->getDataType() == DataType::TTJets)
+	if (event->getDataType() == DataType::TTJets_amcatnloFXFX)
 		do_MC_matching = true;
 	else
 		do_MC_matching = false;
@@ -338,24 +338,6 @@ BAT::TtbarHypothesis HitFitAnalyser::BatEvent(const hitfit::Lepjets_Event& ev, c
 		}
 		else if ( jetType == hitfit::hadw2_label ) {
 			newWj2->setFourVector( jetFV );
-		}
-	}
-
-	for (BAT::JetCollection::const_iterator j = bJetsForFitting.begin(); j != bJetsForFitting.end(); ++i, ++j) {
-		FourVector hfJet = fourVectorFromHitFit(ev.jet(i).p());
-		int hfJType = ev.jet(i).type();
-//    if ((*j)->getFourVector().DeltaR(hfJet) < 0.005) {
-		if (hfJType != hitfit::unknown_label) {
-			BAT::Jet newJet(**j);
-			newJet.setFourVector(hfJet);
-			if (hfJType == hitfit::lepb_label)
-				*newLepB = newJet;
-			if (hfJType == hitfit::hadb_label)
-				*newHadB = newJet;
-			if (hfJType == hitfit::hadw1_label)
-				*newWj1 = newJet;
-			if (hfJType == hitfit::hadw2_label)
-				*newWj2 = newJet;
 		}
 	}
 
