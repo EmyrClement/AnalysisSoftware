@@ -31,9 +31,12 @@ ConfigFile::ConfigFile(int argc, char **argv) :
 		config(PythonParser::parse_python_file(configPath())), //
 		maxEvents_(PythonParser::getAttributeFromPyObject<long>(config, "maxEvents")), //
 		datasetInfoFile_(PythonParser::getAttributeFromPyObject<string>(config, "datasetInfoFile")), //
-		pileUpFile_(PythonParser::getAttributeFromPyObject<string>(config, "PUFile")), //
-		pileUpFile_up_(PythonParser::getAttributeFromPyObject<string>(config, "PUFile_up")), //
-		pileUpFile_down_(PythonParser::getAttributeFromPyObject<string>(config, "PUFile_down")), //
+		pileUpFile_Muon_(PythonParser::getAttributeFromPyObject<string>(config, "PUFile_Muon")), //
+		pileUpFile_up_Muon_(PythonParser::getAttributeFromPyObject<string>(config, "PUFile_up_Muon")), //
+		pileUpFile_down_Muon_(PythonParser::getAttributeFromPyObject<string>(config, "PUFile_down_Muon")), //
+		pileUpFile_Electron_(PythonParser::getAttributeFromPyObject<string>(config, "PUFile_Electron")), //
+		pileUpFile_up_Electron_(PythonParser::getAttributeFromPyObject<string>(config, "PUFile_up_Electron")), //
+		pileUpFile_down_Electron_(PythonParser::getAttributeFromPyObject<string>(config, "PUFile_down_Electron")), //
 		ttbarLikelihoodFile_(PythonParser::getAttributeFromPyObject<string>(config, "TTbarLikelihoodFile")), //
 		btagEfficiencyFile_(PythonParser::getAttributeFromPyObject<string>(config, "BTagEfficiencyFile")), //
 		getMuonScaleFactorsFromFile_(PythonParser::getAttributeFromPyObject<bool>(config, "getMuonScaleFactorsFromFile")), //
@@ -112,9 +115,12 @@ boost::program_options::variables_map ConfigFile::getParameters(int argc, char**
 	desc.add_options()("config-file", value<std::string>(), "Configuration file for BAT");
 	desc.add_options()("datasetInfoFile", value<std::string>(),
 			"Dataset information file for event weight calculation");
-	desc.add_options()("PUFile", value<std::string>(), "set input PU file for PU re-weighting");
-	desc.add_options()("PUFile_up", value<std::string>(), "set input PU file for PU re-weighting up systematic");
-	desc.add_options()("PUFile_down", value<std::string>(), "set input PU file for PU re-weighting down systematic");
+	desc.add_options()("PUFile_Muon", value<std::string>(), "set input PU file for PU re-weighting");
+	desc.add_options()("PUFile_up_Muon", value<std::string>(), "set input PU file for PU re-weighting up systematic");
+	desc.add_options()("PUFile_down_Muon", value<std::string>(), "set input PU file for PU re-weighting down systematic");
+	desc.add_options()("PUFile_Electron", value<std::string>(), "set input PU file for PU re-weighting");
+	desc.add_options()("PUFile_up_Electron", value<std::string>(), "set input PU file for PU re-weighting up systematic");
+	desc.add_options()("PUFile_down_Electron", value<std::string>(), "set input PU file for PU re-weighting down systematic");
 	desc.add_options()("TTbarLikelihoodFile", value<std::string>(), "set input file for ttbar likelihood reconstruction");
 	desc.add_options()("BTagEfficiencyFile", value<std::string>(), "set input file for b tag efficiency");
 	desc.add_options()("getMuonScaleFactorsFromFile", value<bool>(), "state whether we are getting the muon scale factors from a file or not");
@@ -219,25 +225,46 @@ string ConfigFile::configPath() const {
 		return DEFAULT_CONFIG_PATH;
 }
 
-string ConfigFile::PUFile() const {
-	if (programOptions.count("PUFile"))
-		return programOptions["PUFile"].as<std::string>();
+string ConfigFile::PUFile_Muon() const {
+	if (programOptions.count("PUFile_Muon"))
+		return programOptions["PUFile_Muon"].as<std::string>();
 	else
-		return pileUpFile_;
+		return pileUpFile_Muon_;
 }
 
-string ConfigFile::PUFile_up() const {
-	if (programOptions.count("PUFile_up"))
-		return programOptions["PUFile_up"].as<std::string>();
+string ConfigFile::PUFile_up_Muon() const {
+	if (programOptions.count("PUFile_up_Muon"))
+		return programOptions["PUFile_up_Muon"].as<std::string>();
 	else
-		return pileUpFile_up_;
+		return pileUpFile_up_Muon_;
 }
 
-string ConfigFile::PUFile_down() const {
-	if (programOptions.count("PUFile_down"))
-		return programOptions["PUFile_down"].as<std::string>();
+string ConfigFile::PUFile_down_Muon() const {
+	if (programOptions.count("PUFile_down_Muon"))
+		return programOptions["PUFile_down_Muon"].as<std::string>();
 	else
-		return pileUpFile_down_;
+		return pileUpFile_down_Muon_;
+}
+
+string ConfigFile::PUFile_Electron() const {
+	if (programOptions.count("PUFile_Electron"))
+		return programOptions["PUFile_Electron"].as<std::string>();
+	else
+		return pileUpFile_Electron_;
+}
+
+string ConfigFile::PUFile_up_Electron() const {
+	if (programOptions.count("PUFile_up_Electron"))
+		return programOptions["PUFile_up_Electron"].as<std::string>();
+	else
+		return pileUpFile_up_Electron_;
+}
+
+string ConfigFile::PUFile_down_Electron() const {
+	if (programOptions.count("PUFile_down_Electron"))
+		return programOptions["PUFile_down_Electron"].as<std::string>();
+	else
+		return pileUpFile_down_Electron_;
 }
 
 string ConfigFile::TTbarLikelihoodFile() const {
@@ -509,9 +536,13 @@ void ConfigFile::loadIntoMemory() {
 	Globals::produceFitterASCIIoutput = fitterOutputFlag();
 
 
-	Globals::estimatedPileup = getPileUpHistogram(PUFile());
-	Globals::estimatedPileup_up = getPileUpHistogram(PUFile_up());
-	Globals::estimatedPileup_down = getPileUpHistogram(PUFile_down());
+	Globals::estimatedPileup_Muon = getPileUpHistogram(PUFile_Muon());
+	Globals::estimatedPileup_up_Muon = getPileUpHistogram(PUFile_up_Muon());
+	Globals::estimatedPileup_down_Muon = getPileUpHistogram(PUFile_down_Muon());
+
+	Globals::estimatedPileup_Electron = getPileUpHistogram(PUFile_Electron());
+	Globals::estimatedPileup_up_Electron = getPileUpHistogram(PUFile_up_Electron());
+	Globals::estimatedPileup_down_Electron = getPileUpHistogram(PUFile_down_Electron());
 
 	//Lepton Scale Factors
 	Globals::ElectronScaleFactorSystematic = electronScaleFactorSystematic();

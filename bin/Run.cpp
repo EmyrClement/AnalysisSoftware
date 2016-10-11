@@ -87,7 +87,7 @@ void setConfiguration(ConfigFile config) {
 	cout << "Loading configuration..." << endl;
 	cout << "Using config-file '" << config.configPath() << endl;
 	cout << "Using Dataset info file:  '" << config.datasetInfoFile() << endl;
-	cout << "Using pileup-file '" << config.PUFile() << endl;
+	cout << "Using pileup-file '" << config.PUFile_Muon() << " and " << config.PUFile_Electron() << endl;
 	if (config.jesSystematic()!=0)
 		cout << "Varying all the jets by " << config.jesSystematic() << " sigma(s) (JEC uncertainty)\n";
 	long maxEvents(config.maxEvents());

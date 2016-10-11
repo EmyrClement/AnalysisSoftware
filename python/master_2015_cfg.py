@@ -27,9 +27,12 @@ default_settings = {
     'MuonScaleFactorSystematic':0,
     'JESsystematic':0,
     'JetSmearingSystematic':0,
-    'PUFile':'PileUp_2015_truth_central.root',
-    'PUFile_up':'PileUp_2015_truth_up.root',
-    'PUFile_down':'PileUp_2015_truth_down.root',
+    'PUFile_Muon':'PileUp_2015_truth_central_Muon.root',
+    'PUFile_up_Muon':'PileUp_2015_truth_up_Muon.root',
+    'PUFile_down_Muon':'PileUp_2015_truth_down_Muon.root',
+    'PUFile_Electron':'PileUp_2015_truth_central_Electron.root',
+    'PUFile_up_Electron':'PileUp_2015_truth_up_Electron.root',
+    'PUFile_down_Electron':'PileUp_2015_truth_down_Electron.root',
     'MuonIdIsoScaleFactorsFile':'nofile.root',
     'TTbarLikelihoodFile' : 'LikelihoodInputAnalyserOutput.root',
     'BTagEfficiencyFile' : 'BTagEfficiency.root',
@@ -52,8 +55,8 @@ analysis_settings = {
     'JetSmearing_down':{'JetSmearingSystematic':-1},
     'LightJet_down':{'LightTagSystematic':-1},
     'LightJet_up':{'LightTagSystematic':1},
-    'PU_down':{ 'PUFile':'PileUp_2015_truth_down.root', 'custom_file_suffix':'PU_down' },
-    'PU_up':{'PUFile':'PileUp_2015_truth_up.root', 'custom_file_suffix':'PU_up' },
+    'PU_down':{ 'PUFile_Muon':'PileUp_2015_truth_down_Muon.root', 'PUFile_Electron':'PileUp_2015_truth_down_Electron.root', 'custom_file_suffix':'PU_down' },
+    'PU_up':{'PUFile_Muon':'PileUp_2015_truth_up_Muon.root', 'PUFile_Electron':'PileUp_2015_truth_up_Electron.root', 'custom_file_suffix':'PU_up' },
     'Test': {'custom_file_suffix':'TESTING'}
 }
 
@@ -108,9 +111,13 @@ if os.environ.has_key('ntupleToProcess'):
     ntupleToProcess = int(os.environ['ntupleToProcess'])
 
 #File for pile-up re-weighting
-PUFile = toolsFolder + "data/" + settings['PUFile']
-PUFile_up = toolsFolder + "data/" + settings['PUFile_up']
-PUFile_down = toolsFolder + "data/" + settings['PUFile_down']
+PUFile_Muon = toolsFolder + "data/" + settings['PUFile_Muon']
+PUFile_up_Muon = toolsFolder + "data/" + settings['PUFile_up_Muon']
+PUFile_down_Muon = toolsFolder + "data/" + settings['PUFile_down_Muon']
+PUFile_Electron = toolsFolder + "data/" + settings['PUFile_Electron']
+PUFile_up_Electron = toolsFolder + "data/" + settings['PUFile_up_Electron']
+PUFile_down_Electron = toolsFolder + "data/" + settings['PUFile_down_Electron']
+
 getMuonScaleFactorsFromFile = True
 getElectronScaleFactorsFromFile = True
 ElectronIdScaleFactorsFile = 'BristolAnalysis/Tools/data/egammaEffi.txt_SF2D.root'
@@ -165,7 +172,7 @@ if ntupleToProcess > 0 :
 
 print 'Parsed config settings:'
 for setting,value in settings.iteritems():
-    print setting, '=', value
+    print setting, '=*()*DASFR', value
 
 
 #Jet Energy Resolutions files (L7 corrections)
@@ -190,7 +197,7 @@ applyMetType0Corr = False
 TQAFPath = ""
 
 #integrated luminosity the MC simulation will be scaled to
-lumi = 12892
+lumi = 12878
 
 #this value will be part of the output file name: DataType_CenterOfMassEnergyTeV_lumipb-1_....
 centerOfMassEnergy = 13

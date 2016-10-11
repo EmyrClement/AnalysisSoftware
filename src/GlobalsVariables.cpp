@@ -13,15 +13,18 @@ namespace BAT {
 //general
 unsigned long Globals::maxEvents = 0;
 
-double Globals::luminosity = 19584.;
-unsigned short Globals::energyInTeV = 8;
+double Globals::luminosity = 12878.;
+unsigned short Globals::energyInTeV = 13;
 unsigned long Globals::printEveryXEvents = 100000;
 std::string Globals::selectedEventsOutputfile = "selectedEvents.txt";
 std::string Globals::selectedEventsWithMetaDataOutputfile = "selectedEventsWithMetaData.txt";
 PileUpReweightingMethod::value Globals::pileUpReweightingMethod = PileUpReweightingMethod::averagePileUp;
-boost::shared_ptr<TH1D> Globals::estimatedPileup = boost::shared_ptr<TH1D>(new TH1D("tmp", "tmp", 25, 0, 25));
-boost::shared_ptr<TH1D> Globals::estimatedPileup_up = boost::shared_ptr<TH1D>(new TH1D("tmp_up", "tmp_up", 25, 0, 25));
-boost::shared_ptr<TH1D> Globals::estimatedPileup_down = boost::shared_ptr<TH1D>(new TH1D("tmp_down", "tmp_down", 25, 0, 25));
+boost::shared_ptr<TH1D> Globals::estimatedPileup_Muon = boost::shared_ptr<TH1D>(new TH1D("tmp", "tmp", 25, 0, 25));
+boost::shared_ptr<TH1D> Globals::estimatedPileup_up_Muon = boost::shared_ptr<TH1D>(new TH1D("tmp_up", "tmp_up", 25, 0, 25));
+boost::shared_ptr<TH1D> Globals::estimatedPileup_down_Muon = boost::shared_ptr<TH1D>(new TH1D("tmp_down", "tmp_down", 25, 0, 25));
+boost::shared_ptr<TH1D> Globals::estimatedPileup_Electron = boost::shared_ptr<TH1D>(new TH1D("tmp", "tmp", 25, 0, 25));
+boost::shared_ptr<TH1D> Globals::estimatedPileup_up_Electron = boost::shared_ptr<TH1D>(new TH1D("tmp_up", "tmp_up", 25, 0, 25));
+boost::shared_ptr<TH1D> Globals::estimatedPileup_down_Electron = boost::shared_ptr<TH1D>(new TH1D("tmp_down", "tmp_down", 25, 0, 25));
 unsigned int Globals::NTupleVersion = 0;
 std::string Globals::sample = "";
 bool Globals::verbose = true;

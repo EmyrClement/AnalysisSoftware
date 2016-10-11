@@ -45,9 +45,11 @@ private:
 //	bool useSkimEff;
 	boost::array<double, DataType::NUMBER_OF_DATA_TYPES> xsection;
 	boost::array<unsigned long, DataType::NUMBER_OF_DATA_TYPES> numberOfProcessedEvents;
-	boost::shared_ptr<TH1D> estimatedPileUp, estimatedPileUp_up, estimatedPileUp_down;
+	boost::shared_ptr<TH1D> estimatedPileUp_Muon, estimatedPileUp_up_Muon, estimatedPileUp_down_Muon;
+    boost::shared_ptr<TH1D> estimatedPileUp_Electron, estimatedPileUp_up_Electron, estimatedPileUp_down_Electron;
 	boost::array<double, NWEIGHTSSIZE> DATAdistribution;
-	boost::array<double, NWEIGHTSSIZE> pileUpWeights, pileUpWeights_up, pileUpWeights_down;
+	boost::array<double, NWEIGHTSSIZE> pileUpWeights_Muon, pileUpWeights_up_Muon, pileUpWeights_down_Muon;
+    boost::array<double, NWEIGHTSSIZE> pileUpWeights_Electron, pileUpWeights_up_Electron, pileUpWeights_down_Electron;
 	unsigned long numberOfEventsWithTooHighPileUp;
 	void defineNumberOfProducedEvents();
 public:
@@ -63,7 +65,7 @@ public:
 	//@deprecated
 	double getWeight(DataType::value type);
 	//@deprecated
-	double reweightPileUp(unsigned int nVertices, int systematic = 0);
+	double reweightPileUp(unsigned int nVertices, bool isMuonChannel, int systematic = 0);
 //	boost::shared_ptr<TH1D> getPileUpHistogram(std::string pileUpEstimationFile);
 	void generate_weights();
 	boost::array<double, NWEIGHTSSIZE> generateWeights(const boost::array<double, NWEIGHTSSIZE>, const boost::shared_ptr<TH1D>);

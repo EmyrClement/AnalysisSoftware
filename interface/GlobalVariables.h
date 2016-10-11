@@ -31,7 +31,8 @@ struct Globals {
 	static std::string selectedEventsOutputfile;
 	static std::string selectedEventsWithMetaDataOutputfile;
 	static PileUpReweightingMethod::value pileUpReweightingMethod;
-	static boost::shared_ptr<TH1D> estimatedPileup, estimatedPileup_up, estimatedPileup_down;
+	static boost::shared_ptr<TH1D> estimatedPileup_Muon, estimatedPileup_up_Muon, estimatedPileup_down_Muon;
+	static boost::shared_ptr<TH1D> estimatedPileup_Electron, estimatedPileup_up_Electron, estimatedPileup_down_Electron;
 	static unsigned int NTupleVersion;
 	static bool verbose;
 	static std::string sample;

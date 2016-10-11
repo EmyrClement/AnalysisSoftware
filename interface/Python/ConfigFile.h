@@ -31,9 +31,12 @@ public:
 	void loadIntoMemory();
 	long maxEvents() const;
 	std::string datasetInfoFile() const;
-	std::string PUFile() const;
-	std::string PUFile_up() const;
-	std::string PUFile_down() const;
+	std::string PUFile_Muon() const;
+	std::string PUFile_up_Muon() const;
+	std::string PUFile_down_Muon() const;
+	std::string PUFile_Electron() const;
+	std::string PUFile_up_Electron() const;
+	std::string PUFile_down_Electron() const;
 	std::string TTbarLikelihoodFile() const;
 	std::string BTagEfficiencyFile() const;
 	std::string MuonIdScaleFactorsFile() const;
@@ -80,7 +83,8 @@ private:
 	boost::python::object config;
 	long maxEvents_;
 	std::string datasetInfoFile_;
-	std::string pileUpFile_, pileUpFile_up_, pileUpFile_down_;
+	std::string pileUpFile_Muon_, pileUpFile_up_Muon_, pileUpFile_down_Muon_;
+	std::string pileUpFile_Electron_, pileUpFile_up_Electron_, pileUpFile_down_Electron_;
 	std::string ttbarLikelihoodFile_;
 	std::string btagEfficiencyFile_;
 	bool getMuonScaleFactorsFromFile_;

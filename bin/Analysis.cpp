@@ -73,9 +73,29 @@ void Analysis::initiateEvent() {
 	double pileUpWeight_down = 1;
 	if (!currentEvent->isRealData()) {
 		weight = weights->getWeight(currentEvent->getDataType());
-		pileUpWeight = weights->reweightPileUp(currentEvent->getTrueNumberOfVertices().at(0));
-		pileUpWeight_up = weights->reweightPileUp(currentEvent->getTrueNumberOfVertices().at(0), 1);
-		pileUpWeight_down = weights->reweightPileUp(currentEvent->getTrueNumberOfVertices().at(0), -1);
+
+		if ( currentEvent->isSemiLeptonicElectron() ||
+			 currentEvent->PassesElectronSelectionNoB() ||
+			 currentEvent->PassesElectronQCDSelectionNoB() ||
+			 currentEvent->PassesElectronConversionSelectionNoB() ||
+			 currentEvent->PassesElectronChannelTrigger()
+		) {
+			pileUpWeight = weights->reweightPileUp(currentEvent->getTrueNumberOfVertices().at(0), false );
+			pileUpWeight_up = weights->reweightPileUp(currentEvent->getTrueNumberOfVertices().at(0), false, 1);
+			pileUpWeight_down = weights->reweightPileUp(currentEvent->getTrueNumberOfVertices().at(0), false, -1);
+		}
+		else if (
+			 currentEvent->isSemiLeptonicMuon() ||
+			 currentEvent->PassesMuonSelectionNoB() ||
+			 currentEvent->PassesMuonQCDSelection1p5to3NoB() ||
+			 currentEvent->PassesMuonQCDSelection3toInfNoB() ||
+			 currentEvent->PassesMuonChannelTrigger()
+			) {
+			pileUpWeight = weights->reweightPileUp(currentEvent->getTrueNumberOfVertices().at(0), true );
+			pileUpWeight_up = weights->reweightPileUp(currentEvent->getTrueNumberOfVertices().at(0), true, 1);
+			pileUpWeight_down = weights->reweightPileUp(currentEvent->getTrueNumberOfVertices().at(0), true, -1);
+		}
+
 	}
 
 	// include generator weight

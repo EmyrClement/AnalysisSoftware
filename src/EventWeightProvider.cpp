@@ -22,11 +22,15 @@ EventWeightProvider::EventWeightProvider(string datasetInformationFile) :
 		datasetInfo_(datasetInformationFile), //
 		xsection(datasetInfo_.getCrossSections()), //
 		numberOfProcessedEvents(datasetInfo_.getArrayOfProcessedEvents()), //
-		estimatedPileUp(Globals::estimatedPileup), //
-		estimatedPileUp_up(Globals::estimatedPileup_up), //
-		estimatedPileUp_down(Globals::estimatedPileup_down), //
+		estimatedPileUp_Muon(Globals::estimatedPileup_Muon), //
+		estimatedPileUp_up_Muon(Globals::estimatedPileup_up_Muon), //
+		estimatedPileUp_down_Muon(Globals::estimatedPileup_down_Muon), //
+		estimatedPileUp_Electron(Globals::estimatedPileup_Electron), //
+		estimatedPileUp_up_Electron(Globals::estimatedPileup_up_Electron), //
+		estimatedPileUp_down_Electron(Globals::estimatedPileup_down_Electron), //
 		DATAdistribution(), //
-		pileUpWeights(), //
+		pileUpWeights_Muon(), //
+		pileUpWeights_Electron(), //
 		numberOfEventsWithTooHighPileUp(0) {
 
 	generate_weights();
@@ -51,15 +55,28 @@ double EventWeightProvider::getWeight(DataType::value type) {
 		return xsection[type] * Globals::luminosity / numberOfProcessedEvents[type];
 }
 
-double EventWeightProvider::reweightPileUp(unsigned int numberOfVertices, int systematic ) {
+double EventWeightProvider::reweightPileUp(unsigned int numberOfVertices, bool isMuonChannel, int systematic ) {
 
-	boost::array<double, NWEIGHTSSIZE>* weights = &pileUpWeights;
-	if ( systematic == -1 ) {
-		weights = &pileUpWeights_down;
+	boost::array<double, NWEIGHTSSIZE>* weights = &pileUpWeights_Muon;
+
+	if ( isMuonChannel ) {
+		if ( systematic == -1 ) {
+			weights = &pileUpWeights_down_Muon;
+		}
+		else if ( systematic == 1 ) {
+			weights = &pileUpWeights_up_Muon;
+		}		
 	}
-	else if ( systematic == 1 ) {
-		weights = &pileUpWeights_up;
+	else {
+		weights = &pileUpWeights_Electron;
+		if ( systematic == -1 ) {
+			weights = &pileUpWeights_down_Electron;
+		}
+		else if ( systematic == 1 ) {
+			weights = &pileUpWeights_up_Electron;
+		}	
 	}
+
 
 	if (numberOfVertices >= weights->size()) {
 		++numberOfEventsWithTooHighPileUp;
@@ -107,9 +124,13 @@ double EventWeightProvider::reweightTopPt(const EventPtr event) {
 
 void EventWeightProvider::generate_weights() {
 
-	pileUpWeights = generateWeights(Spring2016, estimatedPileUp);
-	pileUpWeights_up = generateWeights(Spring2016, estimatedPileUp_up);
-	pileUpWeights_down = generateWeights(Spring2016, estimatedPileUp_down);
+	pileUpWeights_Muon = generateWeights(Spring2016, estimatedPileUp_Muon);
+	pileUpWeights_up_Muon = generateWeights(Spring2016, estimatedPileUp_up_Muon);
+	pileUpWeights_down_Muon = generateWeights(Spring2016, estimatedPileUp_down_Muon);
+
+	pileUpWeights_Electron = generateWeights(Spring2016, estimatedPileUp_Electron);
+	pileUpWeights_up_Electron = generateWeights(Spring2016, estimatedPileUp_up_Electron);
+	pileUpWeights_down_Electron = generateWeights(Spring2016, estimatedPileUp_down_Electron);
 
 // 	cout << "Pile up weights" << endl;
 // 	for (unsigned int index = 0; index < pileUpWeights.size(); ++index){
