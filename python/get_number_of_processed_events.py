@@ -70,10 +70,14 @@ if __name__ == '__main__':
 			files.append(full_path)
 		total_processed_event = 0
 		for file_path in files:
+
+			if 'SingleMuon' in file_path or 'SingleElectron' in file_path:
+				continue;
+
 			rootfile = TFile(file_path)
 			hist = rootfile.Get("topPairEPlusJetsSelectionAnalyser/individualCuts")
 			if not hist : 
-				print "Waaargh help. Can't find histogram for : ", f
+				print "Waaargh help. Can't find histogram for : ", file_path
 				continue
 			ntuple_processed_events = hist.GetBinContent(1)
 			# print file_path
