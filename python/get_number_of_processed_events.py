@@ -92,11 +92,10 @@ if __name__ == '__main__':
 		for i, line in enumerate(content):
 			if not ( line.startswith("datasetInfo['"+dataset+"']") ): continue
 			exists = True
-			lineSplit = line.split()
-			lineSplit[-2] = str(int(total_processed_event))
-			content[i] = ' '.join( lineSplit )
+			lineSplit = line.split('NumberOfProcessedEvents')
+			content[i] = lineSplit[0] + 'NumberOfProcessedEvents" : ' + str(int(total_processed_event)) + "}"
 		if not (exists): print "This dataset does not have an entry in DatasetInfo file. For now, Go make one."
-
+		print '\n'
 	datasetFile = open(filename_tmp,'w')
 	print "-"*60
 	print "New DataSetInfo_13TeV_25ns :\n"
