@@ -22,7 +22,7 @@ double const PseudoTopAnalyser::minNeutrinoSumPt_ = 0;
 double const PseudoTopAnalyser::minWMt_ = 0;
 unsigned int const PseudoTopAnalyser::minNJets_ = 4;
 unsigned int const PseudoTopAnalyser::minNBJets_ = 2;
-double const PseudoTopAnalyser::minJetPt_ = 25;
+double const PseudoTopAnalyser::minJetPt_ = 30;
 double const PseudoTopAnalyser::maxJetAbsEta_ = 2.4;
 
 void PseudoTopAnalyser::analyse(const EventPtr event) {
