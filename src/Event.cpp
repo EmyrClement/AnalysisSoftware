@@ -20,7 +20,7 @@ namespace BAT {
 bool Event::useCustomConversionTagger = false;
 bool Event::usePFIsolation = true;
 
-double const Event::minJetPt_ = 25;
+double const Event::minJetPt_ = 30;
 double const Event::maxJetAbsEta_ = 2.4;
 unsigned int const Event::minNJets_ = 4;
 unsigned int const Event::minNBJets_ = 2;
@@ -801,6 +801,13 @@ const bool Event::passesSignalLeptonSelection( const unsigned int selectionCrite
 	 ) {
 		ptThreshold = minSignalElectronPt_;
 		etaThreshold = minSignalElectronEta_;
+		// if ( signalLepton->d0() )
+		if ( signalLepton->isInBarrelRegion() ) {
+			if ( signalLepton->d0() > 0.05 ) return false;
+		}
+		else {
+			if ( signalLepton->d0() > 0.1 ) return false;
+		}
 	}
 	else if ( selection == SelectionCriteria::MuonPlusJetsReference ||
 		 		selection == SelectionCriteria::MuonPlusJetsQCDNonIsolated1p5to3 ||
