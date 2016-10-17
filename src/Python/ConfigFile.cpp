@@ -576,23 +576,6 @@ void ConfigFile::loadIntoMemory() {
 
 	}
 
-	// if (Globals::energyInTeV == 7 && getElectronScaleFactorsFromFile_ && boost::filesystem::exists(ElectronIdIsoScaleFactorsFile()) && boost::filesystem::exists(ElectronTriggerScaleFactorsFile())) {
-	// 	std::cout << "Getting electron scale factors from file " << ElectronIdIsoScaleFactorsFile() << " and " << ElectronTriggerScaleFactorsFile() << "." << std::endl;
-	// 	Globals::electronIdIsoScaleFactorsHistogram = getElectronIdIsoScaleFactorsHistogram(ElectronIdIsoScaleFactorsFile());
-	// 	Globals::electronTriggerScaleFactorsHistogram = getElectronTriggerScaleFactorsHistogram(ElectronTriggerScaleFactorsFile());
-	// } else {
-	// 	std::cout << "No electron scale factors file, corrections will be set to 1." << std::endl;
-	// }
-
-	if ( Globals::energyInTeV == 7 && getHadronTriggerFromFile_ ) {
-		std::cout << "Getting electron trigger hadron leg efficiencies from file " << hadronTriggerFile() << "." << std::endl;
-		getHadronTriggerLegHistogram(hadronTriggerFile());
-	} else {
-		std::cout << "No electron trigger hadron leg efficiencies file, corrections will be set to 1." << std::endl;
-	}
-
-
-
 	getCSVCorrectPermHistogram( TTbarLikelihoodFile() );
 	getCSVIncorrectPermHistogram( TTbarLikelihoodFile() );
 
