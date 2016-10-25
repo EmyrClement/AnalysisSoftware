@@ -1,19 +1,19 @@
 import os
-mc_path_13TeV = '/hdfs/TopQuarkGroup/ec6821/0.0.8/ntuple/v0.0.8/Spring16/'
-data_path_13TeV = '/hdfs/TopQuarkGroup/ec6821/0.0.8/ntuple/v0.0.8/Spring16/'
+mc_path_13TeV = '/hdfs/TopQuarkGroup/ec6821/0.0.10/ntuple/v0.0.10/Spring16/'
+data_path_13TeV = '/hdfs/TopQuarkGroup/ec6821/0.0.10/ntuple/v0.0.10/Spring16/'
 
 datasets_13TeV = {
 
-    'SingleMuon_Run2016B' : [ mc_path_13TeV + 'SingleMuon_Run2016B_PromptReco_v2/tmp/'],
-    'SingleMuon_Run2016C' : [ mc_path_13TeV + 'SingleMuon_Run2016C_PromptReco_v2/tmp/'],
-    'SingleMuon_Run2016D' : [ mc_path_13TeV + 'SingleMuon_Run2016D_PromptReco_v2/tmp/'],
-    # 'SingleMuon_Run2016E' : [ mc_path_13TeV + 'SingleMuon_Run2016E_PromptReco_v2/tmp/'],
+    # 'SingleMuon_Run2016B' : [ mc_path_13TeV + 'SingleMuon_Run2016B_PromptReco_v2/tmp/'],
+    # 'SingleMuon_Run2016C' : [ mc_path_13TeV + 'SingleMuon_Run2016C_PromptReco_v2/tmp/'],
+    # 'SingleMuon_Run2016D' : [ mc_path_13TeV + 'SingleMuon_Run2016D_PromptReco_v2/tmp/'],
+    #### 'SingleMuon_Run2016E' : [ mc_path_13TeV + 'SingleMuon_Run2016E_PromptReco_v2/tmp/'],
 
 
-    'SingleElectron_Run2016B' : [ mc_path_13TeV + 'SingleElectron_Run2016B_PromptReco_v2/tmp/'],
-    'SingleElectron_Run2016C' : [ mc_path_13TeV + 'SingleElectron_Run2016C_PromptReco_v2/tmp/'],
-    'SingleElectron_Run2016D' : [ mc_path_13TeV + 'SingleElectron_Run2016D_PromptReco_v2/tmp/'],
-    # 'SingleElectron_Run2016E' : [ '/hdfs/TopQuarkGroup/ec6821/ntuple/v0.0.8/Spring16/SingleElectron_Run2016E_PromptReco_v2/tmp/'],
+    # 'SingleElectron_Run2016B' : [ mc_path_13TeV + 'SingleElectron_Run2016B_PromptReco_v2/tmp/'],
+    # 'SingleElectron_Run2016C' : [ mc_path_13TeV + 'SingleElectron_Run2016C_PromptReco_v2/tmp/'],
+    # 'SingleElectron_Run2016D' : [ mc_path_13TeV + 'SingleElectron_Run2016D_PromptReco_v2/tmp/'],
+    #### 'SingleElectron_Run2016E' : [ '/hdfs/TopQuarkGroup/ec6821/ntuple/v0.0.8/Spring16/SingleElectron_Run2016E_PromptReco_v2/tmp/'],
 
     'TTJets_PowhegPythia8' : [ mc_path_13TeV + 'TTJets_PowhegPythia8/tmp/' ],
     'TTJets_PowhegPythia8_scaledown' : [ mc_path_13TeV + 'TTJets_PowhegPythia8_scaledown/tmp/' ],
@@ -26,7 +26,7 @@ datasets_13TeV = {
     'TTJets_madgraphMLM' : [ mc_path_13TeV + 'TTJets_madgraphMLM/tmp/'],
     'TTJets_PowhegHerwigpp' : [ mc_path_13TeV + 'TTJets_PowhegHerwigpp/tmp/'],
 
-    # 'TTJets_synch' : [ mc_path_13TeV + 'TTJets_synch/tmp/'],
+    #### 'TTJets_synch' : [ mc_path_13TeV + 'TTJets_synch/tmp/'],
 
     'DYJetsToLL_M50' : [ mc_path_13TeV + 'DYJetsToLL_M50/tmp/' ],
     'WJetsToLNu' : [ mc_path_13TeV + 'WJetsToLNu/tmp/' ],
@@ -37,7 +37,7 @@ datasets_13TeV = {
     'ST_tW' : [mc_path_13TeV + 'ST_tW/tmp/'],
     'STbar_tW' : [mc_path_13TeV + 'STbar_tW/tmp/'],
 
-    'QCD_EMEnriched_15to20' : [mc_path_13TeV + 'QCD_EMEnriched_15to20/tmp/'],
+    #### 'QCD_EMEnriched_15to20' : [mc_path_13TeV + 'QCD_EMEnriched_15to20/tmp/'],
     'QCD_EMEnriched_20to30' : [mc_path_13TeV + 'QCD_EMEnriched_20to30/tmp/'],
     'QCD_EMEnriched_30to50' : [mc_path_13TeV + 'QCD_EMEnriched_30to50/tmp/'],
     'QCD_EMEnriched_50to80' : [mc_path_13TeV + 'QCD_EMEnriched_50to80/tmp/'],
@@ -46,11 +46,11 @@ datasets_13TeV = {
     'QCD_EMEnriched_170to300' : [mc_path_13TeV + 'QCD_EMEnriched_170to300/tmp/'],
     'QCD_EMEnriched_300toInf' : [mc_path_13TeV + 'QCD_EMEnriched_300toInf/tmp/'],
 
-    # 'QCD_bcToE_15to20' : [mc_path_13TeV + 'QCD_bcToE_15to20/tmp/'],
-    # 'QCD_bcToE_20to30' : [mc_path_13TeV + 'QCD_bcToE_20to30/tmp/'],
+    #### 'QCD_bcToE_15to20' : [mc_path_13TeV + 'QCD_bcToE_15to20/tmp/'],
+    #### 'QCD_bcToE_20to30' : [mc_path_13TeV + 'QCD_bcToE_20to30/tmp/'],
     'QCD_bcToE_30to80' : [mc_path_13TeV + 'QCD_bcToE_30to80/tmp/'],
     'QCD_bcToE_80to170' : [mc_path_13TeV + 'QCD_bcToE_80to170/tmp/'],
-    # 'QCD_bcToE_170to250' : [mc_path_13TeV + 'QCD_bcToE_170to250/tmp/'],
+    'QCD_bcToE_170to250' : [mc_path_13TeV + 'QCD_bcToE_170to250/tmp/'],
     'QCD_bcToE_250toInf' : [mc_path_13TeV + 'QCD_bcToE_250toInf/tmp/'],
 
     'QCD_MuEnriched_15to20': [mc_path_13TeV + 'QCD_MuEnriched_15to20/tmp/'],
